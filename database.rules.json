@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "appUpdateConfig": {
+      ".read": "auth !== null",
+      ".write": "false"
+    },
+    "haptics": {
+      "$conversationId": {
+        ".read": "auth !== null && root.child('userConversations').child(auth.uid).hasChild($conversationId)",
+        ".write": "auth !== null && root.child('userConversations').child(auth.uid).hasChild($conversationId)"
+      }
+    },
+    "userConversations": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "userBlocks": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "requests": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "invites": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    }
+  }
+}

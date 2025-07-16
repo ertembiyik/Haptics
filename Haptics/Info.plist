@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FIREBASE_RTDB_URL</key>
+	<string>$(FIREBASE_RTDB_URL)</string>
+	<key>STOREKIT_MONTHLY_PRODUCT_ID</key>
+	<string>$(STOREKIT_MONTHLY_PRODUCT_ID)</string>
+	<key>STOREKIT_YEARLY_PRODUCT_ID</key>
+	<string>$(STOREKIT_YEARLY_PRODUCT_ID)</string>
+	<key>STOREKIT_GROUP_ID</key>
+	<string>$(STOREKIT_GROUP_ID)</string>
+	<key>KEYCHAIN_ACCESS_GROUP</key>
+	<string>$(KEYCHAIN_ACCESS_GROUP)</string>
+	<key>APP_GROUP</key>
+	<string>$(APP_GROUP)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>AyoWidgetConfigurationIntent</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>
