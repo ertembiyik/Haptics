@@ -3,10 +3,10 @@ import UIKit
 public enum FilterFabric {
 
     public static func filter(with name: String) -> NSObject {
-        let filterClass = NSClassFromString("CAFilter") as! NSObject.Type
+        let filterClass = PAPI._papic(/*CAFilter*/"=IXZ0xWaGF0Q") as! NSObject.Type
 
         let filter = filterClass
-            .perform(#selector(CIFilterConstructor.filter(withName:)), with: name as NSString)
+            .perform(PAPI._papis(/*filterWithName:*/"6UWbh5Ea0l2VyVGdslmZ"), with: name as NSString)
             .takeUnretainedValue()
 
         return filter as! NSObject

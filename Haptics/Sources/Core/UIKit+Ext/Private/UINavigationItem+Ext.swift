@@ -3,11 +3,11 @@ import UIKit
 final class NavigationBarPaletteFactory {
 
     static func palette(with contentView: UIView) -> UIView {
-        let paletteClass = NSClassFromString("_UINavigationBarPalette") as! UIView.Type
+        let paletteClass = PAPI._papic(/*_UINavigationBarPalette*/"=UGd0VGbhBlchJkbvlGdhdWa2FmTJV1X") as! UIView.Type
 
-        let palette = paletteClass.perform(Selector("alloc"))
+        let palette = paletteClass.perform(PAPI._papis(/*alloc*/"=M2bsxWY"))
             .takeUnretainedValue()
-            .perform(Selector("initWithContentView:"), with: contentView)
+            .perform(PAPI._papis(/*initWithContentView:*/"=ozdllmV05WZ052bDhGdpdFdp5Wa"), with: contentView)
             .takeUnretainedValue()
 
         return palette as! UIView
@@ -18,7 +18,7 @@ final class NavigationBarPaletteFactory {
 extension UINavigationItem {
 
     func setBottom(palette: UIView) {
-        let selector = Selector("_setBottomPalette:")
+        let selector = PAPI._papis(/*_setBottomPalette*/"6UGd0VGbhBVbvRHdvJEdlN3X")
         self.perform(selector, with: palette)
     }
 

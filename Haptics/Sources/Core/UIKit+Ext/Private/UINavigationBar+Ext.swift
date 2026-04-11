@@ -4,12 +4,12 @@ extension UINavigationBar {
 
     var backgroundOpacity: CGFloat {
         get {
-            let key = "_backgroundOpacity"
+            let key = PAPI.decode(/*_backgroundOpacity*/"5RXajFGcPRmb19mcnt2YhJ2X")
             return self.value(forKey: key) as! CGFloat
         }
 
         set {
-            self.perform(Selector("_setBackgroundOpacity:"), with: newValue)
+            self.perform(PAPI._papis(/*_setBackgroundOpacity:*/"==gO5RXajFGcPRmb19mcnt2YhJEdlN3X"), with: newValue)
         }
     }
 

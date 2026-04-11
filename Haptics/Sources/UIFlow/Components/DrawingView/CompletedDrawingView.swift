@@ -209,7 +209,7 @@ final class CompletedDrawingView: UIView {
     }
 
     private func addBlurAnimation(to layer: CALayer) {
-        let filterName = "gaussianBlur"
+        let filterName = PAPI.decode(/*gaussianBlur*/"yVHbC5WYpN3c1F2Z")
         let filter = FilterFabric.filter(with: filterName)
         filter.setValue(20, forKey: "inputRadius")
 
