@@ -55,11 +55,24 @@ final class ConversationsSessionManagerImpl: ConversationsSessionManager {
     }
 
     func send(haptic: RemoteDataModels.Haptic, to conversationId: String) async throws {
-        let payload = try Database.Encoder().encode(haptic)
-        _ = try await self.functions.httpsCallable("sendHaptic").call([
-            "conversationId": conversationId,
-            "haptic": payload
-        ])
+        let conversationDbRef = self.realtimeDb
+            .child(self.configuration.hapticsPath)
+            .child(conversationId)
+
+        try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<Void, Error>) in
+            do {
+                try conversationDbRef.setValue(from: haptic) { error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+
+                    continuation.resume()
+                }
+            } catch {
+                continuation.resume(throwing: error)
+            }
+        }
     }
 
     func getConversations(for userId: String) async throws -> [RemoteDataModels.Conversation] {

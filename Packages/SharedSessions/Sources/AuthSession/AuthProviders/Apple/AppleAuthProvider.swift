@@ -15,31 +15,16 @@ final class AppleAuthProvider: NSObject,
     func signIn() async throws {
         let appleIDCredential = try await self.obtainAppleIdCredential()
 
-        guard let appleIDToken = appleIDCredential.identityToken else {
-            throw AppleAuthProviderError.unableToReadAppleIDToken
-        }
-
-        guard let nonce = self.currentNonce else {
-            throw AppleAuthProviderError.nonceIsMissed
-        }
-
-        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-            throw AppleAuthProviderError.unableToSerializeAppleIDToken
-        }
-
-        let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
-                                                       rawNonce: nonce,
-                                                       fullName: appleIDCredential.fullName)
+        let credential = try self.firebaseCredential(from: appleIDCredential)
 
         try await Auth.auth().signIn(with: credential)
     }
 
-    func deleteUser() async throws {
+    func deleteUser(_ user: User) async throws {
         let appleIDCredential = try await self.obtainAppleIdCredential()
+        let credential = try self.firebaseCredential(from: appleIDCredential)
 
-        guard let _ = self.currentNonce else {
-            throw AppleAuthProviderError.nonceIsMissed
-        }
+        try await user.reauthenticate(with: credential)
 
         guard let appleAuthCode = appleIDCredential.authorizationCode else {
             throw AppleAuthProviderError.unableToFetchAuthorizationCode
@@ -50,6 +35,7 @@ final class AppleAuthProvider: NSObject,
         }
 
         try await Auth.auth().revokeToken(withAuthorizationCode: authCodeString)
+        try await user.delete()
     }
 
     // MARK: - ASAuthorizationControllerPresentationContextProviding
@@ -96,6 +82,24 @@ final class AppleAuthProvider: NSObject,
         return try await withUnsafeThrowingContinuation { continuation in
             self.appleIDCredentialObtainContinuation = continuation
         }
+    }
+
+    private func firebaseCredential(from appleIDCredential: ASAuthorizationAppleIDCredential) throws -> OAuthCredential {
+        guard let appleIDToken = appleIDCredential.identityToken else {
+            throw AppleAuthProviderError.unableToReadAppleIDToken
+        }
+
+        guard let nonce = self.currentNonce else {
+            throw AppleAuthProviderError.nonceIsMissed
+        }
+
+        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+            throw AppleAuthProviderError.unableToSerializeAppleIDToken
+        }
+
+        return OAuthProvider.appleCredential(withIDToken: idTokenString,
+                                             rawNonce: nonce,
+                                             fullName: appleIDCredential.fullName)
     }
 
 }

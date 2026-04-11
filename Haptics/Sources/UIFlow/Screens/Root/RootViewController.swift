@@ -307,9 +307,19 @@ final class RootViewController: UIViewController, RouterActionDelegate {
         self.spinner.isAnimating = true
     }
 
-    private func presentFriendsController() {
+    private func presentFriendsController(showOnboardingAfterDismiss: Bool = false) {
         let friendsController = withDependencies(from: self) {
             FriendsController()
+        }
+
+        if showOnboardingAfterDismiss {
+            friendsController.onDismiss = { [weak self] in
+                guard let self else {
+                    return
+                }
+
+                self.showOnboardingIfNeeded()
+            }
         }
 
         self.present(friendsController, animated: true)
@@ -454,7 +464,7 @@ final class RootViewController: UIViewController, RouterActionDelegate {
             tooltipConfigs.append(config)
         }
 
-        let modeTooltipId = Tooltips.friendsTooltip.rawValue
+        let modeTooltipId = Tooltips.modeTooltip.rawValue
         if self.tooltipsSession.shouldShowTooltip(with: modeTooltipId, userId: userId) {
             let conversationModeSelectionViewRect = self.conversationModeSelectionView.convert(self.conversationModeSelectionView.bounds, to: nil)
             let config = TooltipConfig(id: modeTooltipId,
@@ -486,7 +496,7 @@ final class RootViewController: UIViewController, RouterActionDelegate {
 
         let emojiInvitesPromoTooltipId = Tooltips.emojiInvitesPromo.rawValue
         if self.tooltipsSession.shouldShowTooltip(with: emojiInvitesPromoTooltipId, userId: userId) {
-            self.presentFriendsController()
+            self.presentFriendsController(showOnboardingAfterDismiss: true)
 
             self.tooltipsSession.markTooltipAsShown(with: emojiInvitesPromoTooltipId, userId: userId)
             return true

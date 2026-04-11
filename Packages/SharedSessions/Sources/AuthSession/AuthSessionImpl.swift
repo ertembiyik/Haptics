@@ -244,9 +244,24 @@ public final class AuthSessionImpl: AuthSession {
         if let userId = self.state.userId {
             try await self.delegate?.willSignOut(with: userId)
         }
-        
-        try await self.appleAuthProvider.deleteUser()
-        try await Auth.auth().currentUser?.delete()
+
+        guard let currentUser = Auth.auth().currentUser else {
+            return
+        }
+
+        if currentUser.isAnonymous {
+            try await currentUser.delete()
+            return
+        }
+
+        if currentUser.providerData.contains(where: { providerInfo in
+            providerInfo.providerID == "apple.com"
+        }) {
+            try await self.appleAuthProvider.deleteUser(currentUser)
+            return
+        }
+
+        try await currentUser.delete()
     }
 
     public func refreshAuthStateForCurrentUser() {

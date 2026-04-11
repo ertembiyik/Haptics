@@ -1,4 +1,5 @@
 import * as functions from "firebase-functions/v2";
+import * as functionsV1 from "firebase-functions/v1";
 import * as admin from "firebase-admin";
 import { getFirestore, initializeFirestore } from "firebase-admin/firestore";
 import { HttpsError } from "firebase-functions/v2/https";
@@ -180,6 +181,19 @@ function createEmptyHaptic(senderId: string) {
     };
 }
 
+function buildConversationIndex(conversationIds: string[]): Record<string, true> | null {
+    const uniqueConversationIds = Array.from(new Set(conversationIds));
+
+    if (uniqueConversationIds.length === 0) {
+        return null;
+    }
+
+    return uniqueConversationIds.reduce<Record<string, true>>((index, conversationId) => {
+        index[conversationId] = true;
+        return index;
+    }, {});
+}
+
 function isFiniteNumber(value: unknown): value is number {
     return typeof value === "number" && Number.isFinite(value);
 }
@@ -335,6 +349,181 @@ async function sendNotificationToUser(
         functions.logger.log(`Removed ${tokensToRemove.length} stale tokens for user ${userId}`);
     }
 }
+
+async function cleanupDeletedUserData(userId: string): Promise<void> {
+    const database = admin.database();
+    const rootRef = database.ref();
+
+    const [
+        userConversationsSnapshot,
+        requestsSnapshot,
+        invitesSnapshot,
+        userBlocksSnapshot,
+        conversationsSnapshot,
+        reportsSnapshot
+    ] = await Promise.all([
+        database.ref("userConversations").get(),
+        database.ref("requests").get(),
+        database.ref("invites").get(),
+        database.ref("userBlocks").get(),
+        firestore.collection("conversations").where("peers", "array-contains", userId).get(),
+        firestore.collection("reports").get()
+    ]);
+
+    const userConversations = toStringArrayMap(userConversationsSnapshot.val());
+    const requests = toStringArrayMap(requestsSnapshot.val());
+    const updates: Record<string, unknown> = {
+        [`requests/${userId}`]: null,
+        [`invites/${userId}`]: null,
+        [`userBlocks/${userId}`]: null,
+        [`userConversations/${userId}`]: null,
+        [`userConversationsIndex/${userId}`]: null
+    };
+
+    Object.entries(requests).forEach(([otherUserId, requestUserIds]) => {
+        if (otherUserId === userId) {
+            return;
+        }
+
+        const filteredRequestUserIds = requestUserIds.filter((requestUserId) => requestUserId !== userId);
+        if (filteredRequestUserIds.length !== requestUserIds.length) {
+            updates[`requests/${otherUserId}`] = filteredRequestUserIds.length > 0 ? filteredRequestUserIds : null;
+        }
+    });
+
+    const invitesValue = invitesSnapshot.val();
+    if (invitesValue && typeof invitesValue === "object" && !Array.isArray(invitesValue)) {
+        Object.entries(invitesValue as Record<string, unknown>).forEach(([otherUserId, rawInviteData]) => {
+            if (otherUserId === userId || !rawInviteData || typeof rawInviteData !== "object" || Array.isArray(rawInviteData)) {
+                return;
+            }
+
+            const inviteData = rawInviteData as Record<string, unknown>;
+
+            if (inviteData.invitedBy === userId) {
+                updates[`invites/${otherUserId}/invitedBy`] = null;
+            }
+
+            const inviteUserIds = toStringArray(inviteData.invites);
+            const filteredInviteUserIds = inviteUserIds.filter((inviteUserId) => inviteUserId !== userId);
+            if (filteredInviteUserIds.length !== inviteUserIds.length) {
+                updates[`invites/${otherUserId}/invites`] = filteredInviteUserIds.length > 0 ? filteredInviteUserIds : null;
+            }
+        });
+    }
+
+    const userBlocksValue = userBlocksSnapshot.val();
+    if (userBlocksValue && typeof userBlocksValue === "object" && !Array.isArray(userBlocksValue)) {
+        Object.entries(userBlocksValue as Record<string, unknown>).forEach(([otherUserId, rawBlockedUsers]) => {
+            if (otherUserId === userId || !rawBlockedUsers || typeof rawBlockedUsers !== "object" || Array.isArray(rawBlockedUsers)) {
+                return;
+            }
+
+            if (Object.prototype.hasOwnProperty.call(rawBlockedUsers, userId)) {
+                updates[`userBlocks/${otherUserId}/${userId}`] = null;
+            }
+        });
+    }
+
+    const peerIdsWithConversationUpdates = new Set<string>();
+
+    conversationsSnapshot.docs.forEach((conversationDocument) => {
+        const conversationId = conversationDocument.id;
+        const conversation = conversationDocument.data() as Conversation;
+
+        updates[`haptics/${conversationId}`] = null;
+
+        conversation.peers
+            .filter((peerId) => peerId !== userId)
+            .forEach((peerId) => {
+                peerIdsWithConversationUpdates.add(peerId);
+
+                const filteredConversationIds = toStringArray(userConversations[peerId])
+                    .filter((existingConversationId) => existingConversationId !== conversationId);
+
+                userConversations[peerId] = filteredConversationIds;
+                updates[`userConversationsIndex/${peerId}/${conversationId}`] = null;
+            });
+    });
+
+    peerIdsWithConversationUpdates.forEach((peerId) => {
+        const conversationIds = toStringArray(userConversations[peerId]);
+        updates[`userConversations/${peerId}`] = conversationIds.length > 0 ? conversationIds : null;
+    });
+
+    await rootRef.update(updates);
+
+    const bulkWriter = firestore.bulkWriter();
+    bulkWriter.delete(firestore.collection("users").doc(userId));
+    bulkWriter.delete(firestore.collection("pushTokens").doc(userId));
+    bulkWriter.delete(firestore.collection("reports").doc(userId));
+
+    conversationsSnapshot.docs.forEach((conversationDocument) => {
+        bulkWriter.delete(conversationDocument.ref);
+    });
+
+    reportsSnapshot.docs.forEach((reportDocument) => {
+        if (reportDocument.id === userId) {
+            return;
+        }
+
+        const reportData = reportDocument.data();
+        const reporterOwnedFields = Object.entries(reportData).reduce<Record<string, admin.firestore.FieldValue>>((fields, [field, value]) => {
+            if (
+                value
+                && typeof value === "object"
+                && !Array.isArray(value)
+                && (value as { reporterId?: unknown }).reporterId === userId
+            ) {
+                fields[field] = admin.firestore.FieldValue.delete();
+            }
+
+            return fields;
+        }, {});
+
+        if (Object.keys(reporterOwnedFields).length > 0) {
+            bulkWriter.set(reportDocument.ref, reporterOwnedFields, { merge: true });
+        }
+    });
+
+    await bulkWriter.close();
+}
+
+exports.syncUserConversationsIndex = functions.database.onValueWritten(
+    {
+        ref: "userConversations/{userId}",
+        region: FUNCTIONS_REGION
+    },
+    async (event) => {
+        const userId = event.params.userId;
+
+        if (typeof userId !== "string" || userId.length === 0) {
+            return null;
+        }
+
+        const conversationIds = toStringArray(event.data.after.val());
+        const conversationIndex = buildConversationIndex(conversationIds);
+
+        await admin.database()
+            .ref(`userConversationsIndex/${userId}`)
+            .set(conversationIndex);
+
+        return null;
+    }
+);
+
+exports.deleteUserData = functionsV1
+    .region(FUNCTIONS_REGION)
+    .auth.user()
+    .onDelete(async (user) => {
+        try {
+            await cleanupDeletedUserData(user.uid);
+            functions.logger.log(`Deleted backend data for auth user ${user.uid}`);
+        } catch (error) {
+            functions.logger.error(`Failed deleting backend data for auth user ${user.uid}: ${error}`);
+            throw error;
+        }
+    });
 
 exports.conversationHapticSent = functions.database.onValueUpdated(
     {

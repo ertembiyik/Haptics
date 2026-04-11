@@ -9,6 +9,8 @@ import CombineExtensions
 
 final class FriendsController: UIViewController,
                                FriendsViewConfirmationDialogPresenter {
+
+    var onDismiss: (() -> Void)?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -131,6 +133,16 @@ final class FriendsController: UIViewController,
             .end(20)
             .bottom(self.view.pin.safeArea.bottom)
             .height(54)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        guard self.isBeingDismissed || self.navigationController?.isBeingDismissed == true else {
+            return
+        }
+
+        self.onDismiss?()
     }
     
     // MARK: - FriendsViewConfirmationDialogPresenter
