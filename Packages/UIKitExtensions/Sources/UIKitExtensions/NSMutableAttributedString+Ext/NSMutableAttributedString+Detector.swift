@@ -1,5 +1,4 @@
 import UIKit
-import Resources
 
 public extension NSMutableAttributedString {
 
@@ -161,5 +160,4 @@ public extension NSMutableAttributedString {
     }
 
 }
-
 

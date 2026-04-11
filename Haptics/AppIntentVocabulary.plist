@@ -9,7 +9,7 @@
 			<string>INSetMessageAttributeIntent</string>
 			<key>IntentExamples</key>
 			<array>
-				<string>Send</string>
+				<string>Mark messages as read in Haptics</string>
 			</array>
 		</dict>
 		<dict>
@@ -17,7 +17,15 @@
 			<string>INSendMessageIntent</string>
 			<key>IntentExamples</key>
 			<array>
-				<string>Send</string>
+				<string>Send a haptic with Haptics</string>
+			</array>
+		</dict>
+		<dict>
+			<key>IntentName</key>
+			<string>INSearchForMessagesIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>Search messages in Haptics</string>
 			</array>
 		</dict>
 	</array>

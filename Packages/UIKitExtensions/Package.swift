@@ -24,12 +24,14 @@ let package = Package(
     ], 
     dependencies: [
         .package(path: "./FoundationExtensions"),
+        .package(path: "./Resources"),
     ],
     targets: [
         .target(
             name: "UIKitExtensions",
             dependencies: [
-                .product(name: "FoundationExtensions", package: "FoundationExtensions")
+                .product(name: "FoundationExtensions", package: "FoundationExtensions"),
+                .product(name: "Resources", package: "Resources"),
             ]
         ),
         .target(

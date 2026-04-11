@@ -48,8 +48,8 @@ extension Logger {
         return logURL
     }
 
-    func deleteSavedLogs() throws {
-        guard let logURL = self.logURL() else {
+    func deleteSavedLogs(fileName: String) throws {
+        guard let logURL = self.logURL(with: fileName) else {
             return
         }
 
@@ -86,4 +86,3 @@ extension Logger {
         }
     }
 }
-
