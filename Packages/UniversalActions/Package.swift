@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Packages/FoundationExtensions"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.6.2"))
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.12.0"))
     ],
     targets: [
         .target(

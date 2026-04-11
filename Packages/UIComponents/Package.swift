@@ -17,11 +17,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/layoutBox/PinLayout.git",
-            .upToNextMajor(from: "1.10.5")
-        ),
-        .package(
-            url: "https://github.com/layoutBox/FlexLayout.git",
-            .upToNextMajor(from: "2.0.7")
+            .upToNextMajor(from: "1.10.6")
         ),
         .package(path: "./FoundationExtensions"),
         .package(path: "./Utils"),
@@ -34,7 +30,6 @@ let package = Package(
             name: "UIComponents",
             dependencies: [
                 .product(name: "PinLayout", package: "PinLayout"),
-                .product(name: "FlexLayout", package: "FlexLayout"),
                 .product(name: "FoundationExtensions", package: "FoundationExtensions"),
                 .product(name: "Utils", package: "Utils"),
                 .product(name: "UIKitExtensions", package: "UIKitExtensions"),

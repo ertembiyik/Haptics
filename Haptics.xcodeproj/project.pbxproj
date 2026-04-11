@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A82302552F8AB867007968C3 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A82302542F8AB867007968C3 /* FirebaseAnalyticsCore */; };
+		A82302572F8AB86E007968C3 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A82302562F8AB86E007968C3 /* FirebaseAnalyticsCore */; };
+		A82302592F8AB876007968C3 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A82302582F8AB876007968C3 /* FirebaseAnalyticsCore */; };
 		F40362F22C0548A1007CE3B8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40362EA2C0548A1007CE3B8 /* SettingsViewController.swift */; };
 		F40362F32C0548A1007CE3B8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40362EB2C0548A1007CE3B8 /* SettingsViewModel.swift */; };
 		F40635DC2CC4006B00F0493B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40635DB2CC4006B00F0493B /* WidgetKit.framework */; };
@@ -23,7 +26,6 @@
 		F427950A2C0FBAFD00B3E44F /* FriendsSupplementaryInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42795092C0FBAFD00B3E44F /* FriendsSupplementaryInfoViewModel.swift */; };
 		F427950D2C0FBF1200B3E44F /* AddFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F427950C2C0FBF1200B3E44F /* AddFriendsViewController.swift */; };
 		F427950F2C0FD69700B3E44F /* SkeletonEmojiInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F427950E2C0FD69700B3E44F /* SkeletonEmojiInfoView.swift */; };
-		F438E7CC2CC54B81008652F1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = F438E7CB2CC54B81008652F1 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		F438E7CE2CC54B81008652F1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F438E7CD2CC54B81008652F1 /* FirebaseAuth */; };
 		F438E7D02CC54B81008652F1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F438E7CF2CC54B81008652F1 /* FirebaseCrashlytics */; };
 		F438E7D22CC54B81008652F1 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F438E7D12CC54B81008652F1 /* FirebaseDatabase */; };
@@ -84,7 +86,6 @@
 		F47795932BE811E700320E63 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F47795922BE811E700320E63 /* Dependencies */; };
 		F47795952BE811E700320E63 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = F47795942BE811E700320E63 /* DependenciesMacros */; };
 		F47795982BE811F300320E63 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = F47795972BE811F300320E63 /* PinLayout */; };
-		F477959B2BE811FE00320E63 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = F477959A2BE811FE00320E63 /* FlexLayout */; };
 		F47796622BE8122100320E63 /* ToggleSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47796012BE8122100320E63 /* ToggleSession.swift */; };
 		F47796632BE8122100320E63 /* ToggleSession+Conviniece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47796022BE8122100320E63 /* ToggleSession+Conviniece.swift */; };
 		F47796642BE8122100320E63 /* ToggleSession+Dependancy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47796032BE8122100320E63 /* ToggleSession+Dependancy.swift */; };
@@ -191,9 +192,7 @@
 		F4F6099D2CC57E30000483E1 /* ProfileSession in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6099C2CC57E30000483E1 /* ProfileSession */; };
 		F4F6099F2CC58494000483E1 /* CryptoUtils in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6099E2CC58494000483E1 /* CryptoUtils */; };
 		F4F609A12CC5873D000483E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4F609A02CC5873D000483E1 /* GoogleService-Info.plist */; };
-		F4F609A32CC5880D000483E1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609A22CC5880D000483E1 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		F4F609A52CC58A3A000483E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4F609A42CC58A3A000483E1 /* GoogleService-Info.plist */; };
-		F4F609A82CC58ABB000483E1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609A72CC58ABB000483E1 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		F4F609AA2CC58AC2000483E1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609A92CC58AC2000483E1 /* FirebaseCrashlytics */; };
 		F4F609AC2CC58ACB000483E1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609AB2CC58ACB000483E1 /* FirebaseCrashlytics */; };
 		F4F609B22CC5BD7A000483E1 /* WidgetsSession in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609B12CC5BD7A000483E1 /* WidgetsSession */; };
@@ -426,11 +425,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4F6FD932CC57423000483E1 /* Resources in Frameworks */,
-				F4F609A32CC5880D000483E1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				F4F6099B2CC57E25000483E1 /* ConversationsSession in Frameworks */,
 				F4F6FDA32CC57959000483E1 /* UIKitExtensions in Frameworks */,
 				F4F6099D2CC57E30000483E1 /* ProfileSession in Frameworks */,
 				F4CCC5B62CC6D9620040F6A2 /* LinksFactory in Frameworks */,
+				A82302572F8AB86E007968C3 /* FirebaseAnalyticsCore in Frameworks */,
 				F45D02D42CD8020F00FE9137 /* AuthSession in Frameworks */,
 				F4F609AC2CC58ACB000483E1 /* FirebaseCrashlytics in Frameworks */,
 				F45D02DA2CD8097200FE9137 /* HapticsConfiguration in Frameworks */,
@@ -465,13 +464,13 @@
 				F438E8082CC56293008652F1 /* ProfileSession in Frameworks */,
 				F450BB6C2C96F7F800997982 /* CryptoUtils in Frameworks */,
 				F43AA43B2CD7E79E006AE0C5 /* AppHealthSession in Frameworks */,
+				A82302592F8AB876007968C3 /* FirebaseAnalyticsCore in Frameworks */,
 				F438E8032CC55FA3008652F1 /* RemoteDataModels in Frameworks */,
 				F44AF6FF2E25030E00FB0AAD /* WaveDistortionView in Frameworks */,
 				F44971342C8AB058009CC650 /* StateMachine in Frameworks */,
 				F4FC43A52CD5322F00888289 /* InvitesSession in Frameworks */,
 				F438E7DC2CC54B81008652F1 /* FirebasePerformance in Frameworks */,
 				F4EAEAED2CD8124B00FB1AF4 /* RegistrationUI in Frameworks */,
-				F438E7CC2CC54B81008652F1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				F438E7D22CC54B81008652F1 /* FirebaseDatabase in Frameworks */,
 				F41AB9532CCD100E009FBDCA /* TooltipsSession in Frameworks */,
 				F449713E2C8AB058009CC650 /* LoggerExtensions in Frameworks */,
@@ -480,7 +479,6 @@
 				F47795952BE811E700320E63 /* DependenciesMacros in Frameworks */,
 				F47795982BE811F300320E63 /* PinLayout in Frameworks */,
 				F450BB6E2C96F7F800997982 /* Utils in Frameworks */,
-				F477959B2BE811FE00320E63 /* FlexLayout in Frameworks */,
 				F41E501E2C8CB0B50095AEBE /* Resources in Frameworks */,
 				F438E7CE2CC54B81008652F1 /* FirebaseAuth in Frameworks */,
 				F438E7D62CC54B81008652F1 /* FirebaseFirestore in Frameworks */,
@@ -500,9 +498,9 @@
 				F45D02DC2CD8097900FE9137 /* HapticsConfiguration in Frameworks */,
 				F4F6FD8B2CC56D5C000483E1 /* CryptoUtils in Frameworks */,
 				F438E80E2CC56488008652F1 /* Dependencies in Frameworks */,
+				A82302552F8AB867007968C3 /* FirebaseAnalyticsCore in Frameworks */,
 				F4F609AA2CC58AC2000483E1 /* FirebaseCrashlytics in Frameworks */,
 				F438E8142CC56926008652F1 /* ProfileSession in Frameworks */,
-				F4F609A82CC58ABB000483E1 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				F45D02D62CD8021500FE9137 /* AuthSession in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1262,12 +1260,12 @@
 				F4F6099A2CC57E25000483E1 /* ConversationsSession */,
 				F4F6099C2CC57E30000483E1 /* ProfileSession */,
 				F4F6099E2CC58494000483E1 /* CryptoUtils */,
-				F4F609A22CC5880D000483E1 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				F4F609AB2CC58ACB000483E1 /* FirebaseCrashlytics */,
 				F4CCC5B52CC6D9620040F6A2 /* LinksFactory */,
 				F471CAA12CC835280093FB7E /* Dependencies */,
 				F45D02D32CD8020F00FE9137 /* AuthSession */,
 				F45D02D92CD8097200FE9137 /* HapticsConfiguration */,
+				A82302562F8AB86E007968C3 /* FirebaseAnalyticsCore */,
 			);
 			productName = WidgetsExtension;
 			productReference = F40635DA2CC4006B00F0493B /* WidgetsExtension.appex */;
@@ -1294,7 +1292,6 @@
 				F47795922BE811E700320E63 /* Dependencies */,
 				F47795942BE811E700320E63 /* DependenciesMacros */,
 				F47795972BE811F300320E63 /* PinLayout */,
-				F477959A2BE811FE00320E63 /* FlexLayout */,
 				F47797462BE8161E00320E63 /* MCEmojiPicker */,
 				F449712F2C8AB058009CC650 /* CombineExtensions */,
 				F44971332C8AB058009CC650 /* StateMachine */,
@@ -1307,7 +1304,6 @@
 				F41E50212C8CC1670095AEBE /* UIKitPrivateExtensions */,
 				F450BB6B2C96F7F800997982 /* CryptoUtils */,
 				F450BB6D2C96F7F800997982 /* Utils */,
-				F438E7CB2CC54B81008652F1 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				F438E7CD2CC54B81008652F1 /* FirebaseAuth */,
 				F438E7CF2CC54B81008652F1 /* FirebaseCrashlytics */,
 				F438E7D12CC54B81008652F1 /* FirebaseDatabase */,
@@ -1331,6 +1327,7 @@
 				F4EAEAEC2CD8124B00FB1AF4 /* RegistrationUI */,
 				F44AF6FE2E25030E00FB0AAD /* WaveDistortionView */,
 				F44AF7002E25032100FB0AAD /* ParticleDissolveEffect */,
+				A82302582F8AB876007968C3 /* FirebaseAnalyticsCore */,
 			);
 			productName = Haptics;
 			productReference = F477948F2BE80FD800320E63 /* Haptics.app */;
@@ -1355,11 +1352,11 @@
 				F438E8132CC56926008652F1 /* ProfileSession */,
 				F438E8152CC5696D008652F1 /* FoundationExtensions */,
 				F4F6FD8A2CC56D5C000483E1 /* CryptoUtils */,
-				F4F609A72CC58ABB000483E1 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				F4F609A92CC58AC2000483E1 /* FirebaseCrashlytics */,
 				F471CAA32CC835590093FB7E /* RemoteDataModels */,
 				F45D02D52CD8021500FE9137 /* AuthSession */,
 				F45D02DB2CD8097900FE9137 /* HapticsConfiguration */,
+				A82302542F8AB867007968C3 /* FirebaseAnalyticsCore */,
 			);
 			productName = AyoIntentExtension;
 			productReference = F4C3BAD22CC44DF700DB44CF /* AyoIntentExtension.appex */;
@@ -1373,7 +1370,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					F40635D92CC4006B00F0493B = {
 						CreatedOnToolsVersion = 16.0;
@@ -1398,7 +1395,6 @@
 			packageReferences = (
 				F47795912BE811E700320E63 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				F47795962BE811F300320E63 /* XCRemoteSwiftPackageReference "PinLayout" */,
-				F47795992BE811FE00320E63 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				F47797452BE8161E00320E63 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 				F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
@@ -1659,7 +1655,6 @@
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = MD55Y22MQS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
@@ -1693,7 +1688,6 @@
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = MD55Y22MQS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
@@ -1754,6 +1748,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MD55Y22MQS;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1818,6 +1813,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MD55Y22MQS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1840,88 +1836,86 @@
 			};
 			name = Release;
 		};
-			F47794A42BE80FD900320E63 /* Debug */ = {
-				isa = XCBuildConfiguration;
-				buildSettings = {
-					APP_GROUP = group.com.ertembiyik.Haptics;
-					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-					ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-					CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
-					CODE_SIGN_STYLE = Automatic;
-					CURRENT_PROJECT_VERSION = 50;
-					DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-					DEVELOPMENT_TEAM = MD55Y22MQS;
-					FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
-					GENERATE_INFOPLIST_FILE = YES;
-					INFOPLIST_FILE = Haptics/Info.plist;
-					INFOPLIST_KEY_CFBundleDisplayName = Haptics;
-					INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-					INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-					INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-					INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-					INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-					INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-					IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-					KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
-					LD_RUNPATH_SEARCH_PATHS = (
-						"$(inherited)",
-						"@executable_path/Frameworks",
-					);
-					MARKETING_VERSION = 1.3;
-					OTHER_LDFLAGS = "-Objc";
-					PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
-					PRODUCT_NAME = "$(TARGET_NAME)";
-					STOREKIT_GROUP_ID = 21517446;
-					STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
-					STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
-					SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-					SUPPORTS_MACCATALYST = NO;
-					SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-					SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+		F47794A42BE80FD900320E63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP = group.com.ertembiyik.Haptics;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 50;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Haptics/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Haptics;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = "-Objc";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STOREKIT_GROUP_ID = 21517446;
+				STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
+				STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
-			F47794A52BE80FD900320E63 /* Release */ = {
-				isa = XCBuildConfiguration;
-				buildSettings = {
-					APP_GROUP = group.com.ertembiyik.Haptics;
-					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-					ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-					CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
-					CODE_SIGN_STYLE = Automatic;
-					CURRENT_PROJECT_VERSION = 50;
-					DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-					DEVELOPMENT_TEAM = MD55Y22MQS;
-					FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
-					GENERATE_INFOPLIST_FILE = YES;
-					INFOPLIST_FILE = Haptics/Info.plist;
-					INFOPLIST_KEY_CFBundleDisplayName = Haptics;
-					INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-					INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-					INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-					INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-					INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-					INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-					IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-					KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
-					LD_RUNPATH_SEARCH_PATHS = (
-						"$(inherited)",
-						"@executable_path/Frameworks",
-					);
-					MARKETING_VERSION = 1.3;
-					OTHER_LDFLAGS = "-Objc";
-					PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
-					PRODUCT_NAME = "$(TARGET_NAME)";
-					STOREKIT_GROUP_ID = 21517446;
-					STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
-					STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
-					SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-					SUPPORTS_MACCATALYST = NO;
-					SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-					SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+		F47794A52BE80FD900320E63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_GROUP = group.com.ertembiyik.Haptics;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 50;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Haptics/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Haptics;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = "-Objc";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STOREKIT_GROUP_ID = 21517446;
+				STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
+				STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1934,7 +1928,6 @@
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = MD55Y22MQS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AyoIntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AyoIntentExtension;
@@ -1962,7 +1955,6 @@
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 50;
-				DEVELOPMENT_TEAM = MD55Y22MQS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AyoIntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AyoIntentExtension;
@@ -2031,7 +2023,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 11.6.0;
+				minimumVersion = 12.12.0;
 			};
 		};
 		F47795912BE811E700320E63 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
@@ -2039,7 +2031,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.6.2;
+				minimumVersion = 1.12.0;
 			};
 		};
 		F47795962BE811F300320E63 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
@@ -2047,15 +2039,7 @@
 			repositoryURL = "https://github.com/layoutBox/PinLayout.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.10.5;
-			};
-		};
-		F47795992BE811FE00320E63 /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/layoutBox/FlexLayout.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.7;
+				minimumVersion = 1.10.6;
 			};
 		};
 		F47797452BE8161E00320E63 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
@@ -2063,12 +2047,27 @@
 			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.3;
+				minimumVersion = 1.2.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A82302542F8AB867007968C3 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+		A82302562F8AB86E007968C3 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+		A82302582F8AB876007968C3 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
 		F41701BB2CD7F27D00049318 /* HapticsConfiguration */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HapticsConfiguration;
@@ -2084,11 +2083,6 @@
 		F41E50212C8CC1670095AEBE /* UIKitPrivateExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIKitPrivateExtensions;
-		};
-		F438E7CB2CC54B81008652F1 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 		F438E7CD2CC54B81008652F1 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2258,11 +2252,6 @@
 			package = F47795962BE811F300320E63 /* XCRemoteSwiftPackageReference "PinLayout" */;
 			productName = PinLayout;
 		};
-		F477959A2BE811FE00320E63 /* FlexLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F47795992BE811FE00320E63 /* XCRemoteSwiftPackageReference "FlexLayout" */;
-			productName = FlexLayout;
-		};
 		F47797462BE8161E00320E63 /* MCEmojiPicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F47797452BE8161E00320E63 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
@@ -2291,16 +2280,6 @@
 		F4F6099E2CC58494000483E1 /* CryptoUtils */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CryptoUtils;
-		};
-		F4F609A22CC5880D000483E1 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		F4F609A72CC58ABB000483E1 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 		F4F609A92CC58AC2000483E1 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;

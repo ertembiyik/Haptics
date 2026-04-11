@@ -21,7 +21,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/layoutBox/PinLayout.git",
-            .upToNextMajor(from: "1.10.5")
+            .upToNextMajor(from: "1.10.6")
         ),
         .package(path: "./UIComponents"),
         .package(path: "./Resources"),
@@ -29,7 +29,7 @@ let package = Package(
         .package(path: "./SharedSessions"),
         .package(
             url: "https://github.com/izyumkin/MCEmojiPicker",
-            .upToNextMinor(from: "1.2.3")
+            .upToNextMinor(from: "1.2.5")
         )
     ],
     targets: [

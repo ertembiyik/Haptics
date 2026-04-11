@@ -20,7 +20,7 @@ let package = Package(
         .package(path: "../Packages/Configurations"),
         .package(path: "../Packages/CombineExtensions"),
         .package(path: "../Packages/LoggerExtensions"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.6.2"))
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.12.0"))
     ],
     targets: [
         .target(
