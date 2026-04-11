@@ -15,8 +15,8 @@ if (process.env.FIRESTORE_EMULATOR_HOST && !process.env.FIRESTORE_PREFER_REST) {
 }
 
 if (process.env.FIRESTORE_EMULATOR_HOST) {
-    (gcpMetadata as typeof gcpMetadata & { universe: (_options?: unknown) => Promise<string> }).universe =
-        async () => "googleapis.com";
+    (gcpMetadata as { universe?: unknown }).universe =
+        (async () => "googleapis.com") as unknown;
 }
 
 const projectId = process.env.GCLOUD_PROJECT
