@@ -29,23 +29,12 @@ final class SettingsProfileInfoHeaderViewModel: BaseSupplementaryViewModel {
 
     @Dependency(\.profileSession) private var profileSession
 
-    @Dependency(\.storeSession) private var storeSession
-
     override init() {
         let profileHeaderDataSubject = CurrentValueSubject<SettingsProfileInfoHeaderData?, Never>(nil)
         self.profileHeaderDataSubject = profileHeaderDataSubject
         self.profileHeaderDataPublisher = profileHeaderDataSubject.eraseToAnyPublisher()
 
         super.init()
-
-        self.register(cancellable: self.storeSession.isProPublisher
-            .dropFirst()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isPro in
-                self?.didReceive(isPro: isPro)
-            })
-
-        self.didReceive(isPro: self.storeSession.isPro)
     }
 
     func loadData() async throws {
@@ -56,17 +45,7 @@ final class SettingsProfileInfoHeaderViewModel: BaseSupplementaryViewModel {
         let profile = try await self.profileSession.getProfile(for: userId)
 
         self.syncQueue.async {
-            self.profileHeaderData = SettingsProfileInfoHeaderData(profile: profile, isPro: self.storeSession.isPro)
-        }
-    }
-
-    private func didReceive(isPro: Bool) {
-        guard let profileHeaderData else {
-            return
-        }
-
-        self.syncQueue.async {
-            self.profileHeaderData = SettingsProfileInfoHeaderData(profile: profileHeaderData.profile, isPro: isPro)
+            self.profileHeaderData = SettingsProfileInfoHeaderData(profile: profile, isPro: false)
         }
     }
 

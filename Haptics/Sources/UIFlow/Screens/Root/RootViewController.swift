@@ -65,8 +65,6 @@ final class RootViewController: UIViewController, RouterActionDelegate {
 
     @Dependency(\.conversationsSession) private var conversationsSession
 
-    @Dependency(\.storeSession) private var storeSession
-
     @Dependency(\.tooltipsSession) private var tooltipsSession
 
     override func viewDidLoad() {
@@ -205,7 +203,7 @@ final class RootViewController: UIViewController, RouterActionDelegate {
             case .friends:
                 self.presentFriendsController()
             case .paywall:
-                self.presentPayWallController()
+                break
             case .ayo(let conversationId):
                 self.sendAyoInConversation(with: conversationId)
             case .conversation(let conversationId):

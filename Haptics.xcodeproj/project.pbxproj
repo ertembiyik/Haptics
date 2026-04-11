@@ -1840,76 +1840,88 @@
 			};
 			name = Release;
 		};
-		F47794A42BE80FD900320E63 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MD55Y22MQS;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Haptics/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Haptics;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.3;
-				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			F47794A42BE80FD900320E63 /* Debug */ = {
+				isa = XCBuildConfiguration;
+				buildSettings = {
+					APP_GROUP = group.com.ertembiyik.Haptics;
+					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+					ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+					CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
+					CODE_SIGN_STYLE = Automatic;
+					CURRENT_PROJECT_VERSION = 50;
+					DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+					DEVELOPMENT_TEAM = MD55Y22MQS;
+					FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
+					GENERATE_INFOPLIST_FILE = YES;
+					INFOPLIST_FILE = Haptics/Info.plist;
+					INFOPLIST_KEY_CFBundleDisplayName = Haptics;
+					INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+					INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+					INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+					INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+					INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+					INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+					IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+					KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
+					LD_RUNPATH_SEARCH_PATHS = (
+						"$(inherited)",
+						"@executable_path/Frameworks",
+					);
+					MARKETING_VERSION = 1.3;
+					OTHER_LDFLAGS = "-Objc";
+					PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
+					PRODUCT_NAME = "$(TARGET_NAME)";
+					STOREKIT_GROUP_ID = 21517446;
+					STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
+					STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
+					SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+					SUPPORTS_MACCATALYST = NO;
+					SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+					SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
-		F47794A52BE80FD900320E63 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MD55Y22MQS;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Haptics/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Haptics;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.3;
-				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			F47794A52BE80FD900320E63 /* Release */ = {
+				isa = XCBuildConfiguration;
+				buildSettings = {
+					APP_GROUP = group.com.ertembiyik.Haptics;
+					ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+					ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+					CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
+					CODE_SIGN_STYLE = Automatic;
+					CURRENT_PROJECT_VERSION = 50;
+					DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+					DEVELOPMENT_TEAM = MD55Y22MQS;
+					FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
+					GENERATE_INFOPLIST_FILE = YES;
+					INFOPLIST_FILE = Haptics/Info.plist;
+					INFOPLIST_KEY_CFBundleDisplayName = Haptics;
+					INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+					INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+					INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+					INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+					INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+					INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+					IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+					KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
+					LD_RUNPATH_SEARCH_PATHS = (
+						"$(inherited)",
+						"@executable_path/Frameworks",
+					);
+					MARKETING_VERSION = 1.3;
+					OTHER_LDFLAGS = "-Objc";
+					PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
+					PRODUCT_NAME = "$(TARGET_NAME)";
+					STOREKIT_GROUP_ID = 21517446;
+					STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
+					STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
+					SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+					SUPPORTS_MACCATALYST = NO;
+					SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+					SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

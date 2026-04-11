@@ -49,7 +49,6 @@ final class SettingsViewModel {
         let baseSections: [SettingSection] = [
             .profile([.shareProfileLink]),
             .notifications([.pushNotifications]),
-            .subscription([.hapticsPro, .restorePurchase]),
             .community([.twitter, .telegramChangelog, .chatSupport]),
             .testerDashboard([.collectLogs]),
             .dangerZone([.deleteAccount, .signOut]),
@@ -72,8 +71,6 @@ final class SettingsViewModel {
     @Dependency(\.authSession) private var authSession
 
     @Dependency(\.linksFactory) private var linksFactory
-
-    @Dependency(\.storeSession) private var storeSession
 
     @Dependency(\.tooltipsSession) private var tooltipsSession
 
@@ -199,16 +196,8 @@ final class SettingsViewModel {
                                       trailingIcon: Self.arrowUpRight,
                                       roundedCorners: topCorners,
                                       trailingIconRotation: .identity) { [weak self] in
-                    guard let self else {
+                    guard self != nil else {
                         return
-                    }
-
-                    let routeAction = withDependencies(from: self) {
-                        RouterAction(routeDestination: .paywall)
-                    }
-
-                    Task { @MainActor in
-                        try await routeAction.perform()
                     }
                 }
             case .restorePurchase:
@@ -219,12 +208,8 @@ final class SettingsViewModel {
                                       trailingIcon: Self.ellipsisIcon,
                                       roundedCorners: bottomCorners,
                                       trailingIconRotation: Self.ninetyDegreeRotation) { [weak self] in
-                    guard let self else {
+                    guard self != nil else {
                         return
-                    }
-
-                    Task {
-                        try await self.storeSession.restorePurchase()
                     }
                 }
             case .twitter:
@@ -501,4 +486,3 @@ final class SettingsViewModel {
     }
 
 }
-

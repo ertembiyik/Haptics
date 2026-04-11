@@ -6,13 +6,19 @@
     },
     "haptics": {
       "$conversationId": {
-        ".read": "auth !== null && root.child('userConversations').child(auth.uid).hasChild($conversationId)",
-        ".write": "auth !== null && root.child('userConversations').child(auth.uid).hasChild($conversationId)"
+        ".read": "auth !== null && root.child('userConversationsIndex').child(auth.uid).child($conversationId).val() === true",
+        ".write": "false"
       }
     },
     "userConversations": {
       "$userId": {
         ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "userConversationsIndex": {
+      "$userId": {
+        ".read": "false",
         ".write": "false"
       }
     },

@@ -3,6 +3,7 @@ import Combine
 import Dependencies
 import Resources
 import StoreKit
+import StoreSession
 import OSLog
 
 final class SubscriptionViewModel {

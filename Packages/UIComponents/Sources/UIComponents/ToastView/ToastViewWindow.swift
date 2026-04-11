@@ -7,9 +7,8 @@ import UIKitPrivateExtensions
 final class ToastWindow: UIWindow {
 
     static let shared: ToastWindow = {
-        let window = ToastWindow(frame: .zero)
-        window.windowScene = UIApplication.shared.connectedKeyWindow?.windowScene
-
+        let window = ToastWindow(frame: UIScreen.main.bounds)
+        window.syncToKeyWindow()
         return window
     }()
 
@@ -40,11 +39,14 @@ final class ToastWindow: UIWindow {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        let rootViewController = UIViewController()
+        rootViewController.view.isUserInteractionEnabled = false
+        rootViewController.view.backgroundColor = UIColor.res.clear
+        self.rootViewController = rootViewController
         self.backgroundColor = UIColor.res.clear
-        self.rootViewController?.view.isUserInteractionEnabled = false
-        self.rootViewController?.view.backgroundColor = UIColor.res.clear
+        self.windowLevel = .alert + 1
+        self.syncToKeyWindow()
 
-        self.isHidden = false
         self.isHidden = true
     }
 
@@ -54,6 +56,7 @@ final class ToastWindow: UIWindow {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        self.syncToKeyWindow()
 
         self.subviews.forEach { view in
             view.frame = self.bounds
@@ -67,6 +70,7 @@ final class ToastWindow: UIWindow {
     }
 
     func presentIfNeeded(for toast: ToastView) {
+        self.syncToKeyWindow()
         let shouldPresent = self.subviews.first == self.rootControllerView && self.subviews.last == toast
         self.isHidden = shouldPresent
         self.isHidden = !shouldPresent
@@ -88,6 +92,16 @@ final class ToastWindow: UIWindow {
 
             toastView.update(with: .hidden)
         }
+    }
+
+    private func syncToKeyWindow() {
+        guard let keyWindow = UIApplication.shared.connectedKeyWindow else {
+            return
+        }
+
+        self.windowScene = keyWindow.windowScene
+        self.frame = keyWindow.bounds
+        self.rootViewController?.view.frame = self.bounds
     }
 
 }

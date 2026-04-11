@@ -7,8 +7,6 @@ import OSLog
 import UIComponents
 import RemoteDataModels
 import ConversationsSession
-import InvitesSession
-import StoreSession
 
 final class FriendsViewModel {
 
@@ -58,12 +56,6 @@ final class FriendsViewModel {
 
     @Dependency(\.feedbackSession) private var feedbackSession
 
-    @Dependency(\.invitesSession) private var invitesSession
-
-    @Dependency(\.storeSession) private var storeSession
-
-    @Dependency(\.toggleSession) private var toggleSession
-
     init() {
         let snapshot = NSDiffableDataSourceSnapshot<FriendsSectionId, String>()
         let initialState = FriendsCollectionStateData<FriendsSectionId>(snapshot: snapshot,
@@ -92,19 +84,15 @@ final class FriendsViewModel {
             return Set(lhs.keys) == Set(rhs.keys)
         }
 
-        let invitesPublishers = Publishers.CombineLatest(self.storeSession.isProPublisher,
-                                                         self.invitesSession.invitesPublisher)
-
         let emptyPublishers = Publishers.CombineLatest(self.conversationsSession.hasEmptyRequestsPublisher,
                                                        self.conversationsSession.hasEmptyConversationsPublisher)
 
-        Publishers.CombineLatest4(self.conversationsSession.requestsPublisher,
+        Publishers.CombineLatest3(self.conversationsSession.requestsPublisher,
                                   conversationsPublisher,
-                                  emptyPublishers,
-                                  invitesPublishers)
+                                  emptyPublishers)
             .dropFirst()
             .receive(on: self.syncQueue)
-            .sink { [weak self] requests, conversations, emptyInfo, invitesInfo in
+            .sink { [weak self] requests, conversations, emptyInfo in
                 guard let self else {
                     return
                 }
@@ -112,28 +100,20 @@ final class FriendsViewModel {
                 let hasEmptyRequests = emptyInfo.0
                 let hasEmptyConversations = emptyInfo.1
 
-                let isPro = invitesInfo.0
-                let invites = invitesInfo.1
-
                 self.didReceive(requests: requests,
                                  conversations: conversations,
                                  hasEmptyRequests: hasEmptyRequests,
-                                 hasEmptyConversations: hasEmptyConversations,
-                                 isPro: isPro,
-                                 invites: invites)
-                self.shouldShowInviteFriendsButton = isPro || invites >= self.toggleSession.freeEmojisInvitesCount
+                                 hasEmptyConversations: hasEmptyConversations)
+                self.shouldShowInviteFriendsButton = true
             }
             .store(in: &self.cancellables)
 
         self.didReceive(requests: self.conversationsSession.requests,
                         conversations: self.conversationsSession.conversations,
                         hasEmptyRequests: self.conversationsSession.hasEmptyRequests,
-                        hasEmptyConversations: self.conversationsSession.hasEmptyConversations,
-                        isPro: self.storeSession.isPro,
-                        invites: self.invitesSession.invites)
+                        hasEmptyConversations: self.conversationsSession.hasEmptyConversations)
 
-        self.shouldShowInviteFriendsButton = self.storeSession.isPro
-        || self.invitesSession.invites >= self.toggleSession.freeEmojisInvitesCount
+        self.shouldShowInviteFriendsButton = true
     }
 
     private func didReceiveLoading() {
@@ -182,16 +162,14 @@ final class FriendsViewModel {
     private func didReceive(requests: [String],
                             conversations: [String: RemoteDataModels.Haptic],
                             hasEmptyRequests: Bool?,
-                            hasEmptyConversations: Bool?,
-                            isPro: Bool,
-                            invites: Int) {
+                            hasEmptyConversations: Bool?) {
         guard hasEmptyRequests != nil || hasEmptyConversations != nil else {
             self.didReceiveLoading()
 
             return
         }
 
-        guard !requests.isEmpty || !conversations.isEmpty || invites < self.toggleSession.freeEmojisInvitesCount else {
+        guard !requests.isEmpty || !conversations.isEmpty else {
             self.didReceiveEmpty()
 
             return
@@ -218,28 +196,7 @@ final class FriendsViewModel {
             ]
         ]
 
-        let inviteCellViewModel: CellViewModel?
-        if !isPro && invites < self.toggleSession.freeEmojisInvitesCount {
-            snapshot.appendSections([
-                FriendsSectionId.invites
-            ])
-
-            let viewModel: CellViewModel
-            if let existingViewModel = self.stateData.inviteCellViewModel {
-                viewModel = existingViewModel
-            } else {
-                viewModel = InviteCellViewModel(numberOfInvitedFriends: invites,
-                                                    target: self.toggleSession.freeEmojisInvitesCount,
-                                                    onDidTapShare: { [weak self] in
-                    self?.onDidTapShare?()
-                })
-            }
-
-            inviteCellViewModel = viewModel
-            snapshot.appendItems([viewModel.uid], toSection: FriendsSectionId.invites)
-        } else {
-            inviteCellViewModel = nil
-        }
+        let inviteCellViewModel: CellViewModel? = nil
 
         var requestsCellViewModels = self.stateData.requestsCellViewModels
         if !requests.isEmpty {

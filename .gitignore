@@ -96,7 +96,7 @@ Firebase/node_modules/
 
 # Secrets & Configuration
 Configuration/Secrets.xcconfig
-GoogleService-Info.plist
+**/GoogleService-Info.plist
 *.p12
 *.mobileprovision
 *.cer

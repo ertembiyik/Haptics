@@ -4,10 +4,9 @@ import Dependencies
 import FirebaseDatabase
 import OSLog
 import RemoteDataModels
+import AnalyticsSession
 import AuthSession
 import FirebaseExtensions
-import StoreSession
-import UniversalActions
 import InvitesSession
 
 public final class ConversationsSessionImpl: ConversationsSession {
@@ -26,30 +25,6 @@ public final class ConversationsSessionImpl: ConversationsSession {
 
     private static func lastSelectedSketchColorCacheKey(for userId: String) -> String {
         return "\(userId)/lastSelectedSketchColor"
-    }
-
-    private static func mapModeAssumingProStatus(currentMode: ConversationsSessionMode,
-                                                 proposalMode: ConversationsSessionMode,
-                                                 isPro: Bool,
-                                                 isEligibleForFreeEmojis: Bool,
-                                                 defaultEmoji: String) -> (actualMode: ConversationsSessionMode,
-                                                                           needsShowPaywall: Bool) {
-        switch proposalMode {
-        case .haptics, .emojis(defaultEmoji):
-            return (proposalMode, false)
-        case .emojis:
-            if isEligibleForFreeEmojis || isPro {
-                return (proposalMode, false)
-            } else {
-                return (.emojis(defaultEmoji), true)
-            }
-        case .sketch:
-            if isPro {
-                return (proposalMode, false)
-            } else {
-                return (currentMode, true)
-            }
-        }
     }
 
     public private(set) var conversations: [String: RemoteDataModels.Haptic] {
@@ -232,8 +207,6 @@ public final class ConversationsSessionImpl: ConversationsSession {
 
     @Dependency(\.analyticsSession) private var analyticsSession
 
-    @Dependency(\.storeSession) private var storeSession
-
     @Dependency(\.invitesSession) private var invitesSession
 
     private let lock = NSLock()
@@ -277,23 +250,12 @@ public final class ConversationsSessionImpl: ConversationsSession {
 
         @Dependency(\.authSession) var authSession
 
-        @Dependency(\.storeSession) var storeSession
-
-        @Dependency(\.configuration) var configuration
-
-        @Dependency(\.invitesSession) var invitesSession
-
         let cachedMode: ConversationsSessionMode
 
         if let userId = authSession.state.userId,
            let data = UserDefaults.standard.data(forKey: Self.modeCacheKey(for: userId)),
            let savedMode = try? JSONDecoder().decode(ConversationsSessionMode?.self, from: data) {
-            let (mode, _) = Self.mapModeAssumingProStatus(currentMode: .haptics,
-                                                          proposalMode: savedMode,
-                                                          isPro: storeSession.isPro,
-                                                          isEligibleForFreeEmojis: invitesSession.isAllegeableForFreeEmojis,
-                                                          defaultEmoji: configuration.defaultEmoji)
-            cachedMode = mode
+            cachedMode = savedMode
         } else {
             cachedMode = .haptics
         }
@@ -555,27 +517,11 @@ public final class ConversationsSessionImpl: ConversationsSession {
 
     public func select(mode: ConversationsSessionMode) {
         self.syncQueue.async {
-            let (actualMode, needsShowPaywall) = Self.mapModeAssumingProStatus(currentMode: self.mode,
-                                                                               proposalMode: mode,
-                                                                               isPro: self.storeSession.isPro,
-                                                                               isEligibleForFreeEmojis: self.invitesSession.isAllegeableForFreeEmojis,
-                                                                               defaultEmoji: self.configuration.defaultEmoji)
-
-            guard actualMode != self.mode || needsShowPaywall else {
+            guard mode != self.mode else {
                 return
             }
 
-            if needsShowPaywall {
-                let routeAction = withDependencies(from: self) {
-                    RouterAction(routeDestination: .paywall)
-                }
-
-                Task { @MainActor in
-                    try await routeAction.perform()
-                }
-            }
-
-            switch actualMode {
+            switch mode {
             case .haptics:
                 break
             case .emojis(let emoji):
@@ -592,13 +538,13 @@ public final class ConversationsSessionImpl: ConversationsSession {
             }
 
             do {
-                let data = try self.encoder.encode(actualMode)
+                let data = try self.encoder.encode(mode)
                 UserDefaults.standard.set(data, forKey: Self.modeCacheKey(for: userId))
             } catch {
                 Logger.conversation.error("Unable to save conversation mode with error: \(error.localizedDescription)")
             }
 
-            self.mode = actualMode
+            self.mode = mode
         }
     }
 

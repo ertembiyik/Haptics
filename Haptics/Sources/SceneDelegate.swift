@@ -8,7 +8,6 @@ import Dependencies
 import UIComponents
 import Utils
 import HapticsConfiguration
-import StoreSession
 import RemoteDataModels
 import UniversalActions
 import AuthSession
@@ -32,8 +31,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
     @Dependency(\.configuration) private var configuration
 
     @Dependency(\.appHealthSession) private var appHealthSession
-
-    @Dependency(\.storeSession) private var storeSession
 
     @Dependency(\.analyticsSession) private var analyticsSession
 
@@ -60,12 +57,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
         window.makeKeyAndVisible()
 
         self.configureSessions()
-
         self.connectToAppHealthSession()
-
         self.connectToAuthSession()
-
-        self.connectToStoreSession()
 
         for context in connectionOptions.urlContexts {
             self.handle(deepLink: context.url)
@@ -145,10 +138,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
             .store(in: &self.cancellables)
 
         self.didReceive(state: self.authSession.state, animated: false, forceSaveToggles: false)
-    }
-
-    private func connectToStoreSession() {
-        self.storeSession.start()
     }
 
     private func didReceive(appUpdateConfig: AppUpdateConfig?) {

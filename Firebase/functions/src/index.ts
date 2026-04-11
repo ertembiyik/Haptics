@@ -1,8 +1,42 @@
 import * as functions from "firebase-functions/v2";
 import * as admin from "firebase-admin";
+import { getFirestore, initializeFirestore } from "firebase-admin/firestore";
 import { HttpsError } from "firebase-functions/v2/https";
+import * as gcpMetadata from "gcp-metadata";
+import { randomUUID } from "crypto";
 
-admin.initializeApp();
+const appOptions: admin.AppOptions = {};
+const firebaseConfig = process.env.FIREBASE_CONFIG?.startsWith("{")
+    ? JSON.parse(process.env.FIREBASE_CONFIG) as { projectId?: string; databaseURL?: string }
+    : undefined;
+
+if (process.env.FIRESTORE_EMULATOR_HOST && !process.env.FIRESTORE_PREFER_REST) {
+    process.env.FIRESTORE_PREFER_REST = "true";
+}
+
+if (process.env.FIRESTORE_EMULATOR_HOST) {
+    (gcpMetadata as typeof gcpMetadata & { universe: (_options?: unknown) => Promise<string> }).universe =
+        async () => "googleapis.com";
+}
+
+const projectId = process.env.GCLOUD_PROJECT
+    || process.env.GOOGLE_CLOUD_PROJECT
+    || firebaseConfig?.projectId;
+
+if (projectId) {
+    appOptions.projectId = projectId;
+}
+
+if (process.env.FIREBASE_DATABASE_URL) {
+    appOptions.databaseURL = process.env.FIREBASE_DATABASE_URL;
+} else if (firebaseConfig?.databaseURL) {
+    appOptions.databaseURL = firebaseConfig.databaseURL;
+}
+
+admin.initializeApp(appOptions);
+const firestore = process.env.FIRESTORE_EMULATOR_HOST
+    ? initializeFirestore(admin.app(), { preferRest: true })
+    : getFirestore(admin.app());
 
 const FUNCTIONS_REGION = process.env.FUNCTIONS_REGION || "europe-west1";
 
@@ -33,7 +67,9 @@ interface SketchInfo {
 }
 
 interface Conversation {
+    id: string;
     peers: string[];
+    timestamp: Date | admin.firestore.Timestamp;
 }
 
 interface UserTokensInfo {
@@ -45,12 +81,176 @@ interface Profile {
 }
 
 const hapticNotificationBarierInSeconds = 5;
+const ayoNotificationBarrierInSeconds = 60;
+const appleReferenceDateOffsetInSeconds = 978307200;
 
 const notificationCategoryNewMessage = "newMessage";
 
 const notificationCategoryFriendRequest = "friendRequest";
 
 const notificationCategoryAyo = "ayo";
+
+function toStringArray(value: unknown): string[] {
+    if (Array.isArray(value)) {
+        return value.filter((entry): entry is string => typeof entry === "string");
+    }
+
+    if (value && typeof value === "object") {
+        return Object.values(value).filter((entry): entry is string => typeof entry === "string");
+    }
+
+    return [];
+}
+
+function toStringArrayMap(value: unknown): Record<string, string[]> {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+        return {};
+    }
+
+    const map: Record<string, string[]> = {};
+    Object.entries(value as Record<string, unknown>).forEach(([key, nestedValue]) => {
+        map[key] = toStringArray(nestedValue);
+    });
+
+    return map;
+}
+
+function sharedConversationExists(
+    conversations: Record<string, string[]>,
+    userId: string,
+    peerId: string
+): boolean {
+    const userConversationIds = new Set(toStringArray(conversations[userId]));
+    return toStringArray(conversations[peerId]).some((conversationId) => userConversationIds.has(conversationId));
+}
+
+function addConversationToUserConversations(
+    conversations: Record<string, string[]>,
+    conversationId: string,
+    userId: string
+): boolean {
+    const conversationsForUserId = toStringArray(conversations[userId]);
+
+    if (conversationsForUserId.includes(conversationId)) {
+        return false;
+    }
+
+    conversations[userId] = [...conversationsForUserId, conversationId];
+    return true;
+}
+
+function removeConversationFromUserConversations(
+    conversations: Record<string, string[]>,
+    conversationId: string,
+    userId: string
+): void {
+    if (!conversations[userId]) {
+        return;
+    }
+
+    conversations[userId] = conversations[userId].filter((existingConversationId) => existingConversationId !== conversationId);
+}
+
+async function checkUsersForBlock(userId: string, peerId: string): Promise<void> {
+    const [userBlocksSnapshot, peerBlocksSnapshot] = await Promise.all([
+        admin.database().ref(`userBlocks/${userId}/${peerId}`).get(),
+        admin.database().ref(`userBlocks/${peerId}/${userId}`).get()
+    ]);
+
+    if (userBlocksSnapshot.exists() || peerBlocksSnapshot.exists()) {
+        throw new HttpsError("failed-precondition", "User is blocked.");
+    }
+}
+
+async function userExists(userId: string): Promise<boolean> {
+    const userDoc = await firestore.collection("users").doc(userId).get();
+    return userDoc.exists;
+}
+
+function createEmptyHaptic(senderId: string) {
+    return {
+        id: randomUUID(),
+        senderId,
+        timestamp: (Date.now() / 1000) - appleReferenceDateOffsetInSeconds,
+        type: {
+            type: "empty",
+            fromRect: [[0, 0], [0, 0]],
+            location: [0, 0]
+        }
+    };
+}
+
+function isFiniteNumber(value: unknown): value is number {
+    return typeof value === "number" && Number.isFinite(value);
+}
+
+function isPoint(value: unknown): value is [number, number] {
+    return Array.isArray(value)
+        && value.length === 2
+        && isFiniteNumber(value[0])
+        && isFiniteNumber(value[1]);
+}
+
+function isRect(value: unknown): value is [[number, number], [number, number]] {
+    return Array.isArray(value)
+        && value.length === 2
+        && isPoint(value[0])
+        && isPoint(value[1]);
+}
+
+function isPointArray(value: unknown): value is Array<[number, number]> {
+    return Array.isArray(value) && value.every((point) => isPoint(point));
+}
+
+function validateHapticPayload(value: unknown, senderId: string): asserts value is Record<string, unknown> {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+        throw new HttpsError("invalid-argument", "Haptic payload must be an object.");
+    }
+
+    const haptic = value as Record<string, unknown>;
+    if (typeof haptic.id !== "string" || haptic.id.length === 0) {
+        throw new HttpsError("invalid-argument", "Haptic id is required.");
+    }
+
+    if (!isFiniteNumber(haptic.timestamp)) {
+        throw new HttpsError("invalid-argument", "Haptic timestamp is required.");
+    }
+
+    if (haptic.senderId !== senderId) {
+        throw new HttpsError("permission-denied", "Cannot send a haptic for another user.");
+    }
+
+    if (!haptic.type || typeof haptic.type !== "object" || Array.isArray(haptic.type)) {
+        throw new HttpsError("invalid-argument", "Haptic type is required.");
+    }
+
+    const type = haptic.type as Record<string, unknown>;
+    switch (type.type) {
+        case "default":
+        case "empty":
+            if (!isRect(type.fromRect) || !isPoint(type.location)) {
+                throw new HttpsError("invalid-argument", "Invalid haptic geometry.");
+            }
+            return;
+        case "emoji":
+            if (!isRect(type.fromRect) || !isPoint(type.location) || typeof type.emoji !== "string" || type.emoji.length === 0) {
+                throw new HttpsError("invalid-argument", "Invalid emoji haptic payload.");
+            }
+            return;
+        case "sketch":
+            if (
+                !isRect(type.fromRect)
+                || !isPointArray(type.locations)
+                || typeof type.color !== "string"
+                || !isFiniteNumber(type.lineWidth)
+            ) {
+                throw new HttpsError("invalid-argument", "Invalid sketch haptic payload.");
+            }
+            return;
+        default:
+            throw new HttpsError("invalid-argument", "Unsupported haptic type.");
+    }
+}
 
 function convertToHaptic(data: any): Haptic | undefined {
     if (data.timestamp) {
@@ -91,7 +291,7 @@ async function sendNotificationToUser(
     userId: string,
     message: Omit<admin.messaging.MulticastMessage, 'tokens'>
 ): Promise<void> {
-    const tokensRef = admin.firestore().collection('pushTokens').doc(userId);
+    const tokensRef = firestore.collection('pushTokens').doc(userId);
     const tokensDoc = await tokensRef.get();
 
     if (!tokensDoc.exists) {
@@ -169,7 +369,7 @@ exports.conversationHapticSent = functions.database.onValueUpdated(
         try {
             const senderId = afterData.senderId;
 
-            const senderRef = admin.firestore().collection('users').doc(senderId);
+            const senderRef = firestore.collection('users').doc(senderId);
             const senderDoc = await senderRef.get();
 
             if (!senderDoc.exists) {
@@ -184,7 +384,7 @@ exports.conversationHapticSent = functions.database.onValueUpdated(
                 return null;
             }
 
-            const conversationRef = admin.firestore().collection('conversations').doc(conversationId);
+            const conversationRef = firestore.collection('conversations').doc(conversationId);
             const conversationDoc = await conversationRef.get();
 
             if (!conversationDoc.exists) {
@@ -325,7 +525,7 @@ exports.sendAyo = functions.https.onCall({
                 throw new HttpsError("unauthenticated", "The function must be called with auth.")
             }
 
-            const senderRef = admin.firestore().collection('users').doc(senderId);
+            const senderRef = firestore.collection('users').doc(senderId);
             const senderDoc = await senderRef.get();
 
             if (!senderDoc.exists) {
@@ -347,7 +547,7 @@ exports.sendAyo = functions.https.onCall({
                 throw new HttpsError("invalid-argument", "The function must be called with a specified conversationId.")
             }
 
-            const conversationRef = admin.firestore().collection('conversations').doc(conversationId);
+            const conversationRef = firestore.collection('conversations').doc(conversationId);
             const conversationDoc = await conversationRef.get();
 
             if (!conversationDoc.exists) {
@@ -370,33 +570,46 @@ exports.sendAyo = functions.https.onCall({
                 throw new HttpsError("permission-denied", "User is not a peer in this conversation.");
             }
 
+            const nowInSeconds = Math.floor(Date.now() / 1000);
+            const throttleResult = await admin.database()
+                .ref(`ayoThrottles/${senderId}/${conversationId}`)
+                .transaction((lastTimestamp: number | null) => {
+                    if (typeof lastTimestamp === "number" && nowInSeconds - lastTimestamp < ayoNotificationBarrierInSeconds) {
+                        return;
+                    }
+
+                    return nowInSeconds;
+                });
+
+            if (!throttleResult.committed) {
+                throw new HttpsError("resource-exhausted", "Ayo was sent too recently for this conversation.");
+            }
+
             const peerIdsToNotify = peers.filter(peerId => peerId !== senderId);
 
             for (const peerId of peerIdsToNotify) {
-                for (let i = 0; i < 15; i++) {
-                    await sendNotificationToUser(peerId, {
-                        data: {
-                            "conversationId": conversationId
-                        },
-                        notification: {
-                            title: `Ayo! This is ${sender.name}!`,
-                            body: `Pss, I've got something to tell you 🤫`
-                        },
-                        apns: {
-                            payload: {
-                                aps: {
-                                    badge: 1,
-                                    category: notificationCategoryAyo,
-                                    sound: {
-                                        name: "default",
-                                        volume: 1
-                                    },
-                                    threadId: conversationId
-                                }
+                await sendNotificationToUser(peerId, {
+                    data: {
+                        "conversationId": conversationId
+                    },
+                    notification: {
+                        title: `Ayo! This is ${sender.name}!`,
+                        body: `Pss, I've got something to tell you 🤫`
+                    },
+                    apns: {
+                        payload: {
+                            aps: {
+                                badge: 1,
+                                category: notificationCategoryAyo,
+                                sound: {
+                                    name: "default",
+                                    volume: 1
+                                },
+                                threadId: conversationId
                             }
                         }
-                    });
-                }
+                    }
+                });
 
                 functions.logger.log(`Ayo notification sent to peer id: ${peerId}`);
             }
@@ -429,42 +642,20 @@ exports.createConversation = functions.https.onCall({
             throw new HttpsError("invalid-argument", "Cannot create conversation with yourself.");
         }
 
-        // Check for blocks (parallel)
-        const [userBlocksSnapshot, peerBlocksSnapshot] = await Promise.all([
-            admin.database().ref(`userBlocks/${userId}/${peerId}`).get(),
-            admin.database().ref(`userBlocks/${peerId}/${userId}`).get()
-        ]);
-
-        if (userBlocksSnapshot.exists()) {
-            throw new HttpsError("failed-precondition", "Cannot create conversation - user is blocked.");
+        if (!(await userExists(peerId))) {
+            throw new HttpsError("not-found", "The peer user does not exist.");
         }
 
-        if (peerBlocksSnapshot.exists()) {
-            throw new HttpsError("failed-precondition", "Cannot create conversation - user is blocked.");
-        }
+        await checkUsersForBlock(userId, peerId);
 
-        // Read only the two relevant users' data (not entire nodes)
-        const [userConvSnapshot, peerConvSnapshot, userRequestsSnapshot, peerRequestsSnapshot] = await Promise.all([
-            admin.database().ref(`userConversations/${userId}`).get(),
-            admin.database().ref(`userConversations/${peerId}`).get(),
+        const [userRequestsSnapshot, peerRequestsSnapshot] = await Promise.all([
             admin.database().ref(`requests/${userId}`).get(),
             admin.database().ref(`requests/${peerId}`).get()
         ]);
 
-        const userConvList: string[] = userConvSnapshot.exists() ? (userConvSnapshot.val() as string[] || []) : [];
-        const peerConvList: string[] = peerConvSnapshot.exists() ? (peerConvSnapshot.val() as string[] || []) : [];
-
-        // Check for existing shared conversation
-        const userConvSet = new Set(userConvList);
-        for (const convId of peerConvList) {
-            if (userConvSet.has(convId)) {
-                throw new HttpsError("already-exists", "Conversation already exists between these users.");
-            }
-        }
-
         // Verify a pending request exists (either direction)
-        const userRequests: string[] = userRequestsSnapshot.exists() ? (userRequestsSnapshot.val() as string[] || []) : [];
-        const peerRequests: string[] = peerRequestsSnapshot.exists() ? (peerRequestsSnapshot.val() as string[] || []) : [];
+        const userRequests = toStringArray(userRequestsSnapshot.val());
+        const peerRequests = toStringArray(peerRequestsSnapshot.val());
 
         const hasPendingRequest = userRequests.includes(peerId) || peerRequests.includes(userId);
 
@@ -472,47 +663,66 @@ exports.createConversation = functions.https.onCall({
             throw new HttpsError("failed-precondition", "No pending friend request exists between these users.");
         }
 
-        // Create conversation document
+        const conversationId = firestore.collection("conversations").doc().id;
         const conversationData = {
+            id: conversationId,
             peers: [userId, peerId],
-            timestamp: admin.firestore.FieldValue.serverTimestamp()
+            timestamp: new Date()
         };
 
-        const conversationRef = await admin.firestore()
-            .collection('conversations')
-            .add(conversationData);
+        await firestore
+            .collection("conversations")
+            .doc(conversationId)
+            .set(conversationData);
 
-        const conversationId = conversationRef.id;
+        try {
+            const addConversationResult = await admin.database()
+                .ref("userConversations")
+                .transaction((currentData: unknown) => {
+                    const conversations = toStringArrayMap(currentData);
 
-        // Build atomic RTDB update
-        const updates: { [key: string]: any } = {};
+                    if (sharedConversationExists(conversations, userId, peerId)) {
+                        return;
+                    }
 
-        // Add conversation to both users
-        updates[`userConversations/${userId}/${userConvList.length}`] = conversationId;
-        updates[`userConversations/${peerId}/${peerConvList.length}`] = conversationId;
+                    const userIdResult = addConversationToUserConversations(conversations, conversationId, userId);
+                    if (!userIdResult) {
+                        return;
+                    }
 
-        // Remove from requests (both directions)
-        const filteredUserRequests = userRequests.filter(id => id !== peerId);
-        updates[`requests/${userId}`] = filteredUserRequests.length > 0 ? filteredUserRequests : null;
+                    const peerIdResult = addConversationToUserConversations(conversations, conversationId, peerId);
+                    if (!peerIdResult) {
+                        return;
+                    }
 
-        const filteredPeerRequests = peerRequests.filter(id => id !== userId);
-        updates[`requests/${peerId}`] = filteredPeerRequests.length > 0 ? filteredPeerRequests : null;
+                    return conversations;
+                });
 
-        // Apply all RTDB updates atomically
-        await admin.database().ref().update(updates);
-
-        // Send empty haptic to initialize the conversation
-        const emptyHaptic = {
-            senderId: userId,
-            timestamp: Date.now() / 1000,
-            type: {
-                type: "empty"
+            if (!addConversationResult.committed) {
+                throw new HttpsError("already-exists", "Conversation already exists between these users.");
             }
-        };
 
-        await admin.database()
-            .ref(`haptics/${conversationId}`)
-            .set(emptyHaptic);
+            const updates: Record<string, unknown> = {};
+
+            const filteredUserRequests = userRequests.filter((id) => id !== peerId);
+            updates[`requests/${userId}`] = filteredUserRequests.length > 0 ? filteredUserRequests : null;
+
+            const filteredPeerRequests = peerRequests.filter((id) => id !== userId);
+            updates[`requests/${peerId}`] = filteredPeerRequests.length > 0 ? filteredPeerRequests : null;
+
+            updates[`userConversationsIndex/${userId}/${conversationId}`] = true;
+            updates[`userConversationsIndex/${peerId}/${conversationId}`] = true;
+            updates[`haptics/${conversationId}`] = createEmptyHaptic(userId);
+
+            await admin.database().ref().update(updates);
+        } catch (error) {
+            await firestore
+                .collection("conversations")
+                .doc(conversationId)
+                .delete()
+                .catch(() => null);
+            throw error;
+        }
 
         return { conversationId };
 
@@ -522,6 +732,51 @@ exports.createConversation = functions.https.onCall({
         }
         functions.logger.error(`Error creating conversation: ${error}`);
         throw new HttpsError("unknown", `Error creating conversation: ${error}`);
+    }
+});
+
+exports.sendHaptic = functions.https.onCall({
+    region: FUNCTIONS_REGION,
+}, async (event) => {
+    try {
+        const senderId = event.auth?.uid;
+
+        if (!senderId) {
+            throw new HttpsError("unauthenticated", "The function must be called with auth.");
+        }
+
+        const conversationId = event.data.conversationId;
+        if (typeof conversationId !== "string" || conversationId.length === 0) {
+            throw new HttpsError("invalid-argument", "The function must be called with conversationId.");
+        }
+
+        const conversationDoc = await firestore
+            .collection("conversations")
+            .doc(conversationId)
+            .get();
+
+        if (!conversationDoc.exists) {
+            throw new HttpsError("not-found", "Conversation not found.");
+        }
+
+        const conversation = conversationDoc.data() as Conversation;
+        if (!conversation.peers.includes(senderId)) {
+            throw new HttpsError("permission-denied", "User is not a peer in this conversation.");
+        }
+
+        validateHapticPayload(event.data.haptic, senderId);
+
+        await admin.database()
+            .ref(`haptics/${conversationId}`)
+            .set(event.data.haptic);
+
+        return { success: true };
+    } catch (error) {
+        if (error instanceof HttpsError) {
+            throw error;
+        }
+        functions.logger.error(`Error sending haptic: ${error}`);
+        throw new HttpsError("unknown", `Error sending haptic: ${error}`);
     }
 });
 
@@ -581,7 +836,7 @@ exports.removeConversation = functions.https.onCall({
         }
 
         // Get conversation to verify user is a peer
-        const conversationDoc = await admin.firestore()
+        const conversationDoc = await firestore
             .collection('conversations')
             .doc(conversationId)
             .get();
@@ -603,31 +858,30 @@ exports.removeConversation = functions.https.onCall({
         }
 
         // Read only the two relevant users' conversations
-        const [userConvSnapshot, peerConvSnapshot] = await Promise.all([
-            admin.database().ref(`userConversations/${userId}`).get(),
-            admin.database().ref(`userConversations/${peerId}`).get()
-        ]);
-
         const updates: { [key: string]: any } = {};
+        const removeConversationResult = await admin.database()
+            .ref("userConversations")
+            .transaction((currentData: unknown) => {
+                const conversations = toStringArrayMap(currentData);
 
-        if (userConvSnapshot.exists()) {
-            const userConvList = (userConvSnapshot.val() as string[]).filter(id => id !== conversationId);
-            updates[`userConversations/${userId}`] = userConvList.length > 0 ? userConvList : null;
+                removeConversationFromUserConversations(conversations, conversationId, userId);
+                removeConversationFromUserConversations(conversations, conversationId, peerId);
+
+                return conversations;
+            });
+
+        if (!removeConversationResult.committed) {
+            throw new HttpsError("aborted", "Failed to remove conversation membership.");
         }
 
-        if (peerConvSnapshot.exists()) {
-            const peerConvList = (peerConvSnapshot.val() as string[]).filter(id => id !== conversationId);
-            updates[`userConversations/${peerId}`] = peerConvList.length > 0 ? peerConvList : null;
-        }
-
-        // Remove haptics
+        updates[`userConversationsIndex/${userId}/${conversationId}`] = null;
+        updates[`userConversationsIndex/${peerId}/${conversationId}`] = null;
         updates[`haptics/${conversationId}`] = null;
 
-        // Apply all RTDB updates atomically
         await admin.database().ref().update(updates);
 
         // Delete conversation document from Firestore
-        await admin.firestore()
+        await firestore
             .collection('conversations')
             .doc(conversationId)
             .delete();
@@ -663,6 +917,10 @@ exports.sendRequest = functions.https.onCall({
             throw new HttpsError("invalid-argument", "Cannot send a friend request to yourself.");
         }
 
+        if (!(await userExists(peerId))) {
+            throw new HttpsError("not-found", "The peer user does not exist.");
+        }
+
         // Check for blocks (parallel)
         const [userBlocksSnapshot, peerBlocksSnapshot] = await Promise.all([
             admin.database().ref(`userBlocks/${userId}/${peerId}`).get(),
@@ -683,8 +941,8 @@ exports.sendRequest = functions.https.onCall({
             admin.database().ref(`userConversations/${peerId}`).get()
         ]);
 
-        const userConvList: string[] = userConvSnapshot.exists() ? (userConvSnapshot.val() as string[] || []) : [];
-        const peerConvList: string[] = peerConvSnapshot.exists() ? (peerConvSnapshot.val() as string[] || []) : [];
+        const userConvList = toStringArray(userConvSnapshot.val());
+        const peerConvList = toStringArray(peerConvSnapshot.val());
 
         const userConvSet = new Set(userConvList);
         for (const convId of peerConvList) {
@@ -742,10 +1000,28 @@ exports.blockUser = functions.https.onCall({
             throw new HttpsError("invalid-argument", "Cannot block yourself.");
         }
 
-        // Add block entry
-        await admin.database()
-            .ref(`userBlocks/${userId}/${userIdToBlock}`)
-            .set(admin.database.ServerValue.TIMESTAMP);
+        if (!(await userExists(userIdToBlock))) {
+            throw new HttpsError("not-found", "The blocked user does not exist.");
+        }
+
+        const addBlockResult = await admin.database()
+            .ref(`userBlocks/${userId}`)
+            .transaction((currentData: Record<string, number> | null) => {
+                const blockedUserIds = currentData ?? {};
+
+                if (blockedUserIds[userIdToBlock] != null) {
+                    return;
+                }
+
+                return {
+                    ...blockedUserIds,
+                    [userIdToBlock]: Date.now()
+                };
+            });
+
+        if (!addBlockResult.committed) {
+            return { success: true, alreadyBlocked: true };
+        }
 
         // Also remove any pending requests between the users
         const updates: { [key: string]: any } = {};
@@ -756,12 +1032,12 @@ exports.blockUser = functions.https.onCall({
         ]);
 
         if (userRequestsSnapshot.exists()) {
-            const userRequests = (userRequestsSnapshot.val() as string[]).filter(id => id !== userIdToBlock);
+            const userRequests = toStringArray(userRequestsSnapshot.val()).filter(id => id !== userIdToBlock);
             updates[`requests/${userId}`] = userRequests.length > 0 ? userRequests : null;
         }
 
         if (peerRequestsSnapshot.exists()) {
-            const peerRequests = (peerRequestsSnapshot.val() as string[]).filter(id => id !== userId);
+            const peerRequests = toStringArray(peerRequestsSnapshot.val()).filter(id => id !== userId);
             updates[`requests/${userIdToBlock}`] = peerRequests.length > 0 ? peerRequests : null;
         }
 
@@ -769,7 +1045,7 @@ exports.blockUser = functions.https.onCall({
             await admin.database().ref().update(updates);
         }
 
-        return { success: true };
+        return { success: true, alreadyBlocked: false };
 
     } catch (error) {
         if (error instanceof HttpsError) {
@@ -794,6 +1070,14 @@ exports.updateInvites = functions.https.onCall({
 
         if (!peerId) {
             throw new HttpsError("invalid-argument", "The function must be called with peerId.");
+        }
+
+        if (peerId === userId) {
+            throw new HttpsError("invalid-argument", "Cannot invite yourself.");
+        }
+
+        if (!(await userExists(peerId))) {
+            throw new HttpsError("not-found", "The invited user does not exist.");
         }
 
         // Use transaction to check and set invitedBy atomically

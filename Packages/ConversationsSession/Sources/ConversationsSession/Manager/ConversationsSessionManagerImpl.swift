@@ -14,8 +14,6 @@ final class ConversationsSessionManagerImpl: ConversationsSessionManager {
 
     private let realtimeDb: DatabaseReference
 
-    private let encoder = Firestore.Encoder()
-
     private let functions = Functions.functions(region: "europe-west1")
 
     init() {
@@ -57,23 +55,11 @@ final class ConversationsSessionManagerImpl: ConversationsSessionManager {
     }
 
     func send(haptic: RemoteDataModels.Haptic, to conversationId: String) async throws {
-        let conversationDbRef = self.realtimeDb
-            .child(self.configuration.hapticsPath)
-            .child(conversationId)
-
-        try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<Void, Error>) in
-            do {
-                try conversationDbRef.setValue(from: haptic) { error in
-                    if let error {
-                        continuation.resume(throwing: error)
-                    }
-
-                    continuation.resume()
-                }
-            } catch {
-                continuation.resume(throwing: error)
-            }
-        }
+        let payload = try Database.Encoder().encode(haptic)
+        _ = try await self.functions.httpsCallable("sendHaptic").call([
+            "conversationId": conversationId,
+            "haptic": payload
+        ])
     }
 
     func getConversations(for userId: String) async throws -> [RemoteDataModels.Conversation] {

@@ -55,7 +55,7 @@ final class NotificationsSessionManagerImpl: NotificationsSessionManager {
             tokenInfo.token != userToken
         }
 
-        if updatedTokens.count == 1 {
+        if updatedTokens.isEmpty {
             try await documentRef.delete()
         } else {
             let updatedTokensInfo = RemoteDataModels.UserPushTokensInfo(id: tokensInfo.id,

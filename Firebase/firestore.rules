@@ -19,10 +19,11 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // Reports - only the owner can create/read their own report
+    // Reports - authenticated users can submit reports keyed by the reported user id,
+    // but only the reported user can read their aggregated report document.
     match /reports/{reportId} {
-      allow read, create: if request.auth.uid == reportId;
-      allow update: if false;
+      allow read: if request.auth.uid == reportId;
+      allow create, update: if request.auth != null;
       allow delete: if false;
     }
 
