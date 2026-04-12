@@ -54,7 +54,6 @@
 		F477949F2BE80FD900320E63 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F477949E2BE80FD900320E63 /* Base */; };
 		F47794A72BE8101700320E63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47794A62BE8101700320E63 /* GoogleService-Info.plist */; };
 		F47795932BE811E700320E63 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F47795922BE811E700320E63 /* Dependencies */; };
-		F47795952BE811E700320E63 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = F47795942BE811E700320E63 /* DependenciesMacros */; };
 		F47795982BE811F300320E63 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = F47795972BE811F300320E63 /* PinLayout */; };
 		F47797472BE8161E00320E63 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F47797462BE8161E00320E63 /* MCEmojiPicker */; };
 		F47990612CB51F2F000FA9D5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F47990602CB51F2F000FA9D5 /* PrivacyInfo.xcprivacy */; };
@@ -225,7 +224,6 @@
 				F449713E2C8AB058009CC650 /* LoggerExtensions in Frameworks */,
 				F438E7DE2CC54B81008652F1 /* FirebaseRemoteConfig in Frameworks */,
 				F438E7FD2CC55FA3008652F1 /* AnalyticsSession in Frameworks */,
-				F47795952BE811E700320E63 /* DependenciesMacros in Frameworks */,
 				F47795982BE811F300320E63 /* PinLayout in Frameworks */,
 				F450BB6E2C96F7F800997982 /* Utils in Frameworks */,
 				F41E501E2C8CB0B50095AEBE /* Resources in Frameworks */,
@@ -390,6 +388,7 @@
 			buildPhases = (
 				F477948B2BE80FD800320E63 /* Sources */,
 				F477948C2BE80FD800320E63 /* Frameworks */,
+				A8C3D0012F8D7E00007968C3 /* Generate Settings Bundle */,
 				F477948D2BE80FD800320E63 /* Resources */,
 				F40635F02CC4006D00F0493B /* Embed Foundation Extensions */,
 				F4C21F032C112C0C00354EF5 /* Crashlytics */,
@@ -407,7 +406,6 @@
 			name = Haptics;
 			packageProductDependencies = (
 				F47795922BE811E700320E63 /* Dependencies */,
-				F47795942BE811E700320E63 /* DependenciesMacros */,
 				F47795972BE811F300320E63 /* PinLayout */,
 				F47797462BE8161E00320E63 /* MCEmojiPicker */,
 				F449712F2C8AB058009CC650 /* CombineExtensions */,
@@ -553,6 +551,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A8C3D0012F8D7E00007968C3 /* Generate Settings Bundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Configuration/generate-package-list.sh",
+				"$(SRCROOT)/Haptics.xcodeproj/project.pbxproj",
+				"$(SRCROOT)/Haptics.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+			);
+			name = "Generate Settings Bundle";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Haptics/Resources/Settings.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Configuration/generate-package-list.sh\"\n";
+		};
 		F4C21F032C112C0C00354EF5 /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -575,7 +595,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+			shellScript = "if [ \"$CONFIGURATION\" = \"Debug\" ]; then\n  echo \"Skipping Crashlytics in Debug\"\n  exit 0\nfi\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -700,7 +720,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -729,9 +749,12 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMPILATION_CACHE_ENABLE_CACHING = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MD55Y22MQS;
+				EAGER_LINKING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -757,6 +780,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -765,7 +789,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -795,7 +819,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MD55Y22MQS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -815,6 +840,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -828,7 +854,7 @@
 				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Haptics/Info.plist;
@@ -1208,11 +1234,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F47795912BE811E700320E63 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
-		};
-		F47795942BE811E700320E63 /* DependenciesMacros */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F47795912BE811E700320E63 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = DependenciesMacros;
 		};
 		F47795972BE811F300320E63 /* PinLayout */ = {
 			isa = XCSwiftPackageProductDependency;
