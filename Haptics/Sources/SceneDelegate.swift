@@ -11,7 +11,6 @@ import HapticsConfiguration
 import RemoteDataModels
 import UniversalActions
 import AuthSession
-import WidgetsSession
 import TooltipsSession
 import InvitesSession
 import AppHealthSession
@@ -34,11 +33,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
 
     @Dependency(\.analyticsSession) private var analyticsSession
 
-    @Dependency(\.widgetsSession) private var widgetsSession
-
     @Dependency(\.tooltipsSession) private var tooltipsSession
 
     @Dependency(\.invitesSession) private var invitesSession
+
+    @Dependency(\.ayoWidgetCacheSyncManager) private var ayoWidgetCacheSyncManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -59,6 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
         self.configureSessions()
         self.connectToAppHealthSession()
         self.connectToAuthSession()
+        self.ayoWidgetCacheSyncManager.start()
 
         for context in connectionOptions.urlContexts {
             self.handle(deepLink: context.url)
@@ -86,6 +86,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
         for context in URLContexts {
             self.handle(deepLink: context.url)
         }
+    }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        self.ayoWidgetCacheSyncManager.refresh()
     }
 
     // MARK: - AuthSessionDelegate
@@ -182,7 +186,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthSessionDelegate {
         self.setUpPushNotifications(basedOn: state)
         self.setUpTooltips(basedOn: state)
         self.invitesSession.start(with: state.userId)
-        self.widgetsSession.reloadAllWidgets()
         self.flipControllers(basedOn: state, animated: animated)
         self.logSuccessfulBootstrap(basedOn: state)
 

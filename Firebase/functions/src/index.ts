@@ -83,6 +83,8 @@ interface Profile {
 
 const hapticNotificationBarierInSeconds = 5;
 const ayoNotificationBarrierInSeconds = 60;
+const sendRequestBarrierInSeconds = 15;
+const updateInvitesBarrierInSeconds = 60;
 const appleReferenceDateOffsetInSeconds = 978307200;
 
 const notificationCategoryNewMessage = "newMessage";
@@ -160,6 +162,29 @@ async function checkUsersForBlock(userId: string, peerId: string): Promise<void>
 
     if (userBlocksSnapshot.exists() || peerBlocksSnapshot.exists()) {
         throw new HttpsError("failed-precondition", "User is blocked.");
+    }
+}
+
+async function acquireThrottle(path: string, barrierInSeconds: number, message: string): Promise<void> {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    const result = await admin.database()
+        .ref(path)
+        .transaction((lastTimestamp: number | null) => {
+            if (typeof lastTimestamp === "number" && nowInSeconds - lastTimestamp < barrierInSeconds) {
+                return;
+            }
+
+            return nowInSeconds;
+        });
+
+    if (!result.committed) {
+        throw new HttpsError("resource-exhausted", message);
+    }
+}
+
+function rejectConsumedAppCheckToken(event: { app?: { alreadyConsumed?: boolean } | null }): void {
+    if (event.app?.alreadyConsumed) {
+        throw new HttpsError("permission-denied", "App Check token has already been consumed. Retry the request.");
     }
 }
 
@@ -704,6 +729,7 @@ exports.friendRequestOnUpdated = functions.database.onValueUpdated(
 
 exports.sendAyo = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
 },
     async (event) => {
         try {
@@ -813,6 +839,7 @@ exports.sendAyo = functions.https.onCall({
 
 exports.createConversation = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -926,6 +953,7 @@ exports.createConversation = functions.https.onCall({
 
 exports.sendHaptic = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
 }, async (event) => {
     try {
         const senderId = event.auth?.uid;
@@ -971,6 +999,7 @@ exports.sendHaptic = functions.https.onCall({
 
 exports.denyConversationRequest = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1010,6 +1039,7 @@ exports.denyConversationRequest = functions.https.onCall({
 
 exports.removeConversation = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1088,6 +1118,8 @@ exports.removeConversation = functions.https.onCall({
 
 exports.sendRequest = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
+    consumeAppCheckToken: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1095,6 +1127,8 @@ exports.sendRequest = functions.https.onCall({
         if (!userId) {
             throw new HttpsError("unauthenticated", "The function must be called with auth.");
         }
+
+        rejectConsumedAppCheckToken(event);
 
         const peerId = event.data.peerId;
 
@@ -1105,6 +1139,10 @@ exports.sendRequest = functions.https.onCall({
         if (userId === peerId) {
             throw new HttpsError("invalid-argument", "Cannot send a friend request to yourself.");
         }
+
+        await acquireThrottle(`requestThrottles/${userId}/${peerId}`,
+            sendRequestBarrierInSeconds,
+            "Friend request sent too recently.");
 
         if (!(await userExists(peerId))) {
             throw new HttpsError("not-found", "The peer user does not exist.");
@@ -1171,6 +1209,7 @@ exports.sendRequest = functions.https.onCall({
 
 exports.blockUser = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1247,6 +1286,8 @@ exports.blockUser = functions.https.onCall({
 
 exports.updateInvites = functions.https.onCall({
     region: FUNCTIONS_REGION,
+    enforceAppCheck: true,
+    consumeAppCheckToken: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1254,6 +1295,8 @@ exports.updateInvites = functions.https.onCall({
         if (!userId) {
             throw new HttpsError("unauthenticated", "The function must be called with auth.");
         }
+
+        rejectConsumedAppCheckToken(event);
 
         const peerId = event.data.peerId;
 
@@ -1264,6 +1307,10 @@ exports.updateInvites = functions.https.onCall({
         if (peerId === userId) {
             throw new HttpsError("invalid-argument", "Cannot invite yourself.");
         }
+
+        await acquireThrottle(`inviteThrottles/${userId}/${peerId}`,
+            updateInvitesBarrierInSeconds,
+            "Invite update sent too recently.");
 
         if (!(await userExists(peerId))) {
             throw new HttpsError("not-found", "The invited user does not exist.");

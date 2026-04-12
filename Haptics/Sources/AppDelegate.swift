@@ -31,6 +31,7 @@ class AppDelegate: UIResponder,
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+        AppCheckBootstrap.configure()
         FirebaseApp.configure()
         self.configureFirebaseEmulatorsIfNeeded()
 

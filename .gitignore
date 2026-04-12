@@ -90,6 +90,7 @@ fastlane/test_output
 iOSInjectionProject/
 
 # Firebase
+Firebase/.firebase/
 Firebase/functions/node_modules/
 Firebase/functions/lib/
 Firebase/node_modules/

@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A82302552F8AB867007968C3 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A82302542F8AB867007968C3 /* FirebaseAnalyticsCore */; };
-		A82302572F8AB86E007968C3 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A82302562F8AB86E007968C3 /* FirebaseAnalyticsCore */; };
+		A80C03952F8BE53C00B94C7F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = A80C03942F8BE53C00B94C7F /* FirebaseAppCheck */; };
 		A82302592F8AB876007968C3 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = A82302582F8AB876007968C3 /* FirebaseAnalyticsCore */; };
+		A845E7E82F8C080D00E6EE1E /* RemoteDataModels in Frameworks */ = {isa = PBXBuildFile; productRef = A845E7E72F8C080D00E6EE1E /* RemoteDataModels */; };
+		A8E731D22F8BE53C00B94C7F /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F471CAA12CC835280093FB7E /* Dependencies */; };
+		A90110032F8C100000B94C7F /* AyoWidgetCacheStore in Frameworks */ = {isa = PBXBuildFile; productRef = A90110022F8C100000B94C7F /* AyoWidgetCacheStore */; };
+		A90110052F8C100000B94C7F /* AyoWidgetCacheStore in Frameworks */ = {isa = PBXBuildFile; productRef = A90110042F8C100000B94C7F /* AyoWidgetCacheStore */; };
+		A90110072F8C100000B94C7F /* AyoWidgetCacheStore in Frameworks */ = {isa = PBXBuildFile; productRef = A90110062F8C100000B94C7F /* AyoWidgetCacheStore */; };
 		F40635DC2CC4006B00F0493B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40635DB2CC4006B00F0493B /* WidgetKit.framework */; };
 		F40635DE2CC4006B00F0493B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F40635DD2CC4006B00F0493B /* SwiftUI.framework */; };
 		F40635EF2CC4006D00F0493B /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F40635DA2CC4006B00F0493B /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -29,10 +33,6 @@
 		F438E8032CC55FA3008652F1 /* RemoteDataModels in Frameworks */ = {isa = PBXBuildFile; productRef = F438E8022CC55FA3008652F1 /* RemoteDataModels */; };
 		F438E8052CC55FA3008652F1 /* StoreSession in Frameworks */ = {isa = PBXBuildFile; productRef = F438E8042CC55FA3008652F1 /* StoreSession */; };
 		F438E8082CC56293008652F1 /* ProfileSession in Frameworks */ = {isa = PBXBuildFile; productRef = F438E8072CC56293008652F1 /* ProfileSession */; };
-		F438E80A2CC56417008652F1 /* ConversationsSession in Frameworks */ = {isa = PBXBuildFile; productRef = F438E8092CC56417008652F1 /* ConversationsSession */; };
-		F438E80E2CC56488008652F1 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F438E80D2CC56488008652F1 /* Dependencies */; };
-		F438E8142CC56926008652F1 /* ProfileSession in Frameworks */ = {isa = PBXBuildFile; productRef = F438E8132CC56926008652F1 /* ProfileSession */; };
-		F438E8162CC5696D008652F1 /* FoundationExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = F438E8152CC5696D008652F1 /* FoundationExtensions */; };
 		F43AA43B2CD7E79E006AE0C5 /* AppHealthSession in Frameworks */ = {isa = PBXBuildFile; productRef = F43AA43A2CD7E79E006AE0C5 /* AppHealthSession */; };
 		F43AA43D2CD7E873006AE0C5 /* ForceUpdateUI in Frameworks */ = {isa = PBXBuildFile; productRef = F43AA43C2CD7E873006AE0C5 /* ForceUpdateUI */; };
 		F44971302C8AB058009CC650 /* CombineExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = F449712F2C8AB058009CC650 /* CombineExtensions */; };
@@ -47,12 +47,9 @@
 		F450BB6C2C96F7F800997982 /* CryptoUtils in Frameworks */ = {isa = PBXBuildFile; productRef = F450BB6B2C96F7F800997982 /* CryptoUtils */; };
 		F450BB6E2C96F7F800997982 /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = F450BB6D2C96F7F800997982 /* Utils */; };
 		F45D02D22CD8020600FE9137 /* AuthSession in Frameworks */ = {isa = PBXBuildFile; productRef = F45D02D12CD8020600FE9137 /* AuthSession */; };
-		F45D02D42CD8020F00FE9137 /* AuthSession in Frameworks */ = {isa = PBXBuildFile; productRef = F45D02D32CD8020F00FE9137 /* AuthSession */; };
-		F45D02D62CD8021500FE9137 /* AuthSession in Frameworks */ = {isa = PBXBuildFile; productRef = F45D02D52CD8021500FE9137 /* AuthSession */; };
 		F45D02DA2CD8097200FE9137 /* HapticsConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = F45D02D92CD8097200FE9137 /* HapticsConfiguration */; };
 		F45D02DC2CD8097900FE9137 /* HapticsConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = F45D02DB2CD8097900FE9137 /* HapticsConfiguration */; };
 		F471CAA22CC835280093FB7E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F471CAA12CC835280093FB7E /* Dependencies */; };
-		F471CAA42CC835590093FB7E /* RemoteDataModels in Frameworks */ = {isa = PBXBuildFile; productRef = F471CAA32CC835590093FB7E /* RemoteDataModels */; };
 		F471CAAA2CC854A90093FB7E /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = F471CAA92CC854A90093FB7E /* AppIntentVocabulary.plist */; };
 		F477949F2BE80FD900320E63 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F477949E2BE80FD900320E63 /* Base */; };
 		F47794A72BE8101700320E63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47794A62BE8101700320E63 /* GoogleService-Info.plist */; };
@@ -66,16 +63,7 @@
 		F4CCC5B42CC6D9170040F6A2 /* LinksFactory in Frameworks */ = {isa = PBXBuildFile; productRef = F4CCC5B32CC6D9170040F6A2 /* LinksFactory */; };
 		F4CCC5B62CC6D9620040F6A2 /* LinksFactory in Frameworks */ = {isa = PBXBuildFile; productRef = F4CCC5B52CC6D9620040F6A2 /* LinksFactory */; };
 		F4EAEAED2CD8124B00FB1AF4 /* RegistrationUI in Frameworks */ = {isa = PBXBuildFile; productRef = F4EAEAEC2CD8124B00FB1AF4 /* RegistrationUI */; };
-		F4F6099B2CC57E25000483E1 /* ConversationsSession in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6099A2CC57E25000483E1 /* ConversationsSession */; };
-		F4F6099D2CC57E30000483E1 /* ProfileSession in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6099C2CC57E30000483E1 /* ProfileSession */; };
-		F4F6099F2CC58494000483E1 /* CryptoUtils in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6099E2CC58494000483E1 /* CryptoUtils */; };
-		F4F609A12CC5873D000483E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4F609A02CC5873D000483E1 /* GoogleService-Info.plist */; };
-		F4F609A52CC58A3A000483E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4F609A42CC58A3A000483E1 /* GoogleService-Info.plist */; };
-		F4F609AA2CC58AC2000483E1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609A92CC58AC2000483E1 /* FirebaseCrashlytics */; };
-		F4F609AC2CC58ACB000483E1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609AB2CC58ACB000483E1 /* FirebaseCrashlytics */; };
 		F4F609B22CC5BD7A000483E1 /* WidgetsSession in Frameworks */ = {isa = PBXBuildFile; productRef = F4F609B12CC5BD7A000483E1 /* WidgetsSession */; };
-		F4F6FD8B2CC56D5C000483E1 /* CryptoUtils in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6FD8A2CC56D5C000483E1 /* CryptoUtils */; };
-		F4F6FD912CC57028000483E1 /* RemoteDataModels in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6FD902CC57028000483E1 /* RemoteDataModels */; };
 		F4F6FD932CC57423000483E1 /* Resources in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6FD922CC57423000483E1 /* Resources */; };
 		F4F6FDA32CC57959000483E1 /* UIKitExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6FDA22CC57959000483E1 /* UIKitExtensions */; };
 		F4FC43A52CD5322F00888289 /* InvitesSession in Frameworks */ = {isa = PBXBuildFile; productRef = F4FC43A42CD5322F00888289 /* InvitesSession */; };
@@ -114,6 +102,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A90110012F8C100000B94C7F /* AyoWidgetCacheStore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AyoWidgetCacheStore; sourceTree = "<group>"; };
 		F40635DA2CC4006B00F0493B /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F40635DB2CC4006B00F0493B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		F40635DD2CC4006B00F0493B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -188,19 +177,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4F6FD932CC57423000483E1 /* Resources in Frameworks */,
-				F4F6099B2CC57E25000483E1 /* ConversationsSession in Frameworks */,
 				F4F6FDA32CC57959000483E1 /* UIKitExtensions in Frameworks */,
-				F4F6099D2CC57E30000483E1 /* ProfileSession in Frameworks */,
 				F4CCC5B62CC6D9620040F6A2 /* LinksFactory in Frameworks */,
-				A82302572F8AB86E007968C3 /* FirebaseAnalyticsCore in Frameworks */,
-				F45D02D42CD8020F00FE9137 /* AuthSession in Frameworks */,
-				F4F609AC2CC58ACB000483E1 /* FirebaseCrashlytics in Frameworks */,
+				A90110052F8C100000B94C7F /* AyoWidgetCacheStore in Frameworks */,
 				F45D02DA2CD8097200FE9137 /* HapticsConfiguration in Frameworks */,
+				A845E7E82F8C080D00E6EE1E /* RemoteDataModels in Frameworks */,
 				F40635DE2CC4006B00F0493B /* SwiftUI.framework in Frameworks */,
 				F40635DC2CC4006B00F0493B /* WidgetKit.framework in Frameworks */,
 				F471CAA22CC835280093FB7E /* Dependencies in Frameworks */,
-				F4F6FD912CC57028000483E1 /* RemoteDataModels in Frameworks */,
-				F4F6099F2CC58494000483E1 /* CryptoUtils in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +200,7 @@
 				F438E8052CC55FA3008652F1 /* StoreSession in Frameworks */,
 				F41E50222C8CC1670095AEBE /* UIKitPrivateExtensions in Frameworks */,
 				F438E8012CC55FA3008652F1 /* ConversationsSession in Frameworks */,
+				A80C03952F8BE53C00B94C7F /* FirebaseAppCheck in Frameworks */,
 				F47797472BE8161E00320E63 /* MCEmojiPicker in Frameworks */,
 				F438E7D02CC54B81008652F1 /* FirebaseCrashlytics in Frameworks */,
 				F47795932BE811E700320E63 /* Dependencies in Frameworks */,
@@ -223,6 +208,7 @@
 				F45D02D22CD8020600FE9137 /* AuthSession in Frameworks */,
 				F43AA43D2CD7E873006AE0C5 /* ForceUpdateUI in Frameworks */,
 				F4F609B22CC5BD7A000483E1 /* WidgetsSession in Frameworks */,
+				A90110032F8C100000B94C7F /* AyoWidgetCacheStore in Frameworks */,
 				F41701BC2CD7F27D00049318 /* HapticsConfiguration in Frameworks */,
 				F438E8082CC56293008652F1 /* ProfileSession in Frameworks */,
 				F450BB6C2C96F7F800997982 /* CryptoUtils in Frameworks */,
@@ -254,17 +240,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F438E80A2CC56417008652F1 /* ConversationsSession in Frameworks */,
-				F438E8162CC5696D008652F1 /* FoundationExtensions in Frameworks */,
 				F4C3BAD32CC44DF700DB44CF /* Intents.framework in Frameworks */,
-				F471CAA42CC835590093FB7E /* RemoteDataModels in Frameworks */,
+				A90110072F8C100000B94C7F /* AyoWidgetCacheStore in Frameworks */,
+				A8E731D22F8BE53C00B94C7F /* Dependencies in Frameworks */,
 				F45D02DC2CD8097900FE9137 /* HapticsConfiguration in Frameworks */,
-				F4F6FD8B2CC56D5C000483E1 /* CryptoUtils in Frameworks */,
-				F438E80E2CC56488008652F1 /* Dependencies in Frameworks */,
-				A82302552F8AB867007968C3 /* FirebaseAnalyticsCore in Frameworks */,
-				F4F609AA2CC58AC2000483E1 /* FirebaseCrashlytics in Frameworks */,
-				F438E8142CC56926008652F1 /* ProfileSession in Frameworks */,
-				F45D02D62CD8021500FE9137 /* AuthSession in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +253,7 @@
 		F438E7C92CC548FC008652F1 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				A90110012F8C100000B94C7F /* AyoWidgetCacheStore */,
 				F44AF6F22E2137C200FB0AAD /* Configurations */,
 				F44AF6F32E2137C200FB0AAD /* DataStructures */,
 				F44AF6F42E2137C200FB0AAD /* Effects */,
@@ -392,18 +372,13 @@
 			);
 			name = WidgetsExtension;
 			packageProductDependencies = (
-				F4F6FD902CC57028000483E1 /* RemoteDataModels */,
 				F4F6FD922CC57423000483E1 /* Resources */,
 				F4F6FDA22CC57959000483E1 /* UIKitExtensions */,
-				F4F6099A2CC57E25000483E1 /* ConversationsSession */,
-				F4F6099C2CC57E30000483E1 /* ProfileSession */,
-				F4F6099E2CC58494000483E1 /* CryptoUtils */,
-				F4F609AB2CC58ACB000483E1 /* FirebaseCrashlytics */,
 				F4CCC5B52CC6D9620040F6A2 /* LinksFactory */,
+				A90110042F8C100000B94C7F /* AyoWidgetCacheStore */,
 				F471CAA12CC835280093FB7E /* Dependencies */,
-				F45D02D32CD8020F00FE9137 /* AuthSession */,
 				F45D02D92CD8097200FE9137 /* HapticsConfiguration */,
-				A82302562F8AB86E007968C3 /* FirebaseAnalyticsCore */,
+				A845E7E72F8C080D00E6EE1E /* RemoteDataModels */,
 			);
 			productName = WidgetsExtension;
 			productReference = F40635DA2CC4006B00F0493B /* WidgetsExtension.appex */;
@@ -459,6 +434,7 @@
 				F438E8042CC55FA3008652F1 /* StoreSession */,
 				F438E8072CC56293008652F1 /* ProfileSession */,
 				F4F609B12CC5BD7A000483E1 /* WidgetsSession */,
+				A90110022F8C100000B94C7F /* AyoWidgetCacheStore */,
 				F4CCC5B32CC6D9170040F6A2 /* LinksFactory */,
 				F41AB9522CCD100E009FBDCA /* TooltipsSession */,
 				F4FC43A42CD5322F00888289 /* InvitesSession */,
@@ -470,6 +446,7 @@
 				F44AF6FE2E25030E00FB0AAD /* WaveDistortionView */,
 				F44AF7002E25032100FB0AAD /* ParticleDissolveEffect */,
 				A82302582F8AB876007968C3 /* FirebaseAnalyticsCore */,
+				A80C03942F8BE53C00B94C7F /* FirebaseAppCheck */,
 			);
 			productName = Haptics;
 			productReference = F477948F2BE80FD800320E63 /* Haptics.app */;
@@ -492,16 +469,9 @@
 			);
 			name = AyoIntentExtension;
 			packageProductDependencies = (
-				F438E8092CC56417008652F1 /* ConversationsSession */,
-				F438E80D2CC56488008652F1 /* Dependencies */,
-				F438E8132CC56926008652F1 /* ProfileSession */,
-				F438E8152CC5696D008652F1 /* FoundationExtensions */,
-				F4F6FD8A2CC56D5C000483E1 /* CryptoUtils */,
-				F4F609A92CC58AC2000483E1 /* FirebaseCrashlytics */,
-				F471CAA32CC835590093FB7E /* RemoteDataModels */,
-				F45D02D52CD8021500FE9137 /* AuthSession */,
+				A90110062F8C100000B94C7F /* AyoWidgetCacheStore */,
+				F471CAA12CC835280093FB7E /* Dependencies */,
 				F45D02DB2CD8097900FE9137 /* HapticsConfiguration */,
-				A82302542F8AB867007968C3 /* FirebaseAnalyticsCore */,
 			);
 			productName = AyoIntentExtension;
 			productReference = F4C3BAD22CC44DF700DB44CF /* AyoIntentExtension.appex */;
@@ -559,7 +529,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4F609A12CC5873D000483E1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +547,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4F609A52CC58A3A000483E1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +631,7 @@
 		F40635F12CC4006D00F0493B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_GROUP = group.com.ertembiyik.Haptics;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
@@ -696,6 +665,7 @@
 		F40635F22CC4006D00F0493B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_GROUP = group.com.ertembiyik.Haptics;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
@@ -938,6 +908,7 @@
 		F4C3BADC2CC44DF700DB44CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_GROUP = group.com.ertembiyik.Haptics;
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
@@ -965,6 +936,7 @@
 		F4C3BADD2CC44DF700DB44CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_GROUP = group.com.ertembiyik.Haptics;
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 53;
@@ -1066,20 +1038,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A82302542F8AB867007968C3 /* FirebaseAnalyticsCore */ = {
+		A80C03942F8BE53C00B94C7F /* FirebaseAppCheck */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsCore;
-		};
-		A82302562F8AB86E007968C3 /* FirebaseAnalyticsCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsCore;
+			productName = FirebaseAppCheck;
 		};
 		A82302582F8AB876007968C3 /* FirebaseAnalyticsCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsCore;
+		};
+		A845E7E72F8C080D00E6EE1E /* RemoteDataModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemoteDataModels;
+		};
+		A90110022F8C100000B94C7F /* AyoWidgetCacheStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AyoWidgetCacheStore;
+		};
+		A90110042F8C100000B94C7F /* AyoWidgetCacheStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AyoWidgetCacheStore;
+		};
+		A90110062F8C100000B94C7F /* AyoWidgetCacheStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AyoWidgetCacheStore;
 		};
 		F41701BB2CD7F27D00049318 /* HapticsConfiguration */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1152,23 +1135,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProfileSession;
 		};
-		F438E8092CC56417008652F1 /* ConversationsSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ConversationsSession;
-		};
-		F438E80D2CC56488008652F1 /* Dependencies */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F47795912BE811E700320E63 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
-			productName = Dependencies;
-		};
-		F438E8132CC56926008652F1 /* ProfileSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProfileSession;
-		};
-		F438E8152CC5696D008652F1 /* FoundationExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FoundationExtensions;
-		};
 		F43AA43A2CD7E79E006AE0C5 /* AppHealthSession */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppHealthSession;
@@ -1225,14 +1191,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AuthSession;
 		};
-		F45D02D32CD8020F00FE9137 /* AuthSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AuthSession;
-		};
-		F45D02D52CD8021500FE9137 /* AuthSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AuthSession;
-		};
 		F45D02D92CD8097200FE9137 /* HapticsConfiguration */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HapticsConfiguration;
@@ -1245,10 +1203,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F47795912BE811E700320E63 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
-		};
-		F471CAA32CC835590093FB7E /* RemoteDataModels */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RemoteDataModels;
 		};
 		F47795922BE811E700320E63 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1282,39 +1236,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RegistrationUI;
 		};
-		F4F6099A2CC57E25000483E1 /* ConversationsSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ConversationsSession;
-		};
-		F4F6099C2CC57E30000483E1 /* ProfileSession */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProfileSession;
-		};
-		F4F6099E2CC58494000483E1 /* CryptoUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CryptoUtils;
-		};
-		F4F609A92CC58AC2000483E1 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		F4F609AB2CC58ACB000483E1 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F438E7CA2CC54B81008652F1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
 		F4F609B12CC5BD7A000483E1 /* WidgetsSession */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WidgetsSession;
-		};
-		F4F6FD8A2CC56D5C000483E1 /* CryptoUtils */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CryptoUtils;
-		};
-		F4F6FD902CC57028000483E1 /* RemoteDataModels */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RemoteDataModels;
 		};
 		F4F6FD922CC57423000483E1 /* Resources */ = {
 			isa = XCSwiftPackageProductDependency;

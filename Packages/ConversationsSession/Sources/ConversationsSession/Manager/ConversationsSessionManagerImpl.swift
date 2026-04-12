@@ -16,6 +16,8 @@ final class ConversationsSessionManagerImpl: ConversationsSessionManager {
 
     private let functions = Functions.functions(region: "europe-west1")
 
+    private let replayProtectedCallableOptions = HTTPSCallableOptions(requireLimitedUseAppCheckTokens: true)
+
     init() {
         @Dependency(\.configuration.realtimeDatabaseUrl) var realtimeDatabaseUrl
 
@@ -119,7 +121,9 @@ final class ConversationsSessionManagerImpl: ConversationsSessionManager {
     }
 
     func sendRequest(from userId: String, to peerId: String) async throws {
-        _ = try await self.functions.httpsCallable("sendRequest").call(["peerId": peerId])
+        _ = try await self.functions
+            .httpsCallable("sendRequest", options: self.replayProtectedCallableOptions)
+            .call(["peerId": peerId])
     }
 
     func sendAyo(to conversationId: String) async throws {

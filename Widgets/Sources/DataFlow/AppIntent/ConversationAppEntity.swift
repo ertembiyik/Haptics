@@ -1,20 +1,13 @@
 import Foundation
 import AppIntents
+import AyoWidgetCacheStore
 import Dependencies
-import AuthSession
-import ConversationsSession
-import ProfileSession
-import RemoteDataModels
-import FoundationExtensions
+import HapticsConfiguration
 
 struct ConversationAppEntity: AppEntity {
     struct ConversationAppEntityQuery: EntityQuery {
 
-        @Dependencies.Dependency(\.authSession) var authSession
-
-        @Dependencies.Dependency(\.conversationsSession) var conversationsSession
-
-        @Dependencies.Dependency(\.profileSession) var profileSession
+        @Dependencies.Dependency(\.configuration) var configuration
 
         func entities(for identifiers: [ConversationAppEntity.ID]) async throws -> [ConversationAppEntity] {
             return try await self.suggestedEntities().filter { entity in
@@ -25,35 +18,20 @@ struct ConversationAppEntity: AppEntity {
         }
 
         func suggestedEntities() async throws -> [ConversationAppEntity] {
-            guard let userId = self.authSession.state.userId else {
-                throw AyoWidgetConfigurationError.invalidAuthState
+            let store = AyoWidgetCacheStore(appGroup: self.configuration.appGroup)
+            let cache = store.load()
+
+            guard cache.authState == .authenticated else {
+                return []
             }
 
-            let userConversations = try await self.conversationsSession.currentConversations()
-
-            return try await userConversations.concurrentMap { userConversation in
-                guard let peerId = userConversation.peers.first(where: { peerId in
-                    peerId != userId
-                }) else {
-                    throw AyoWidgetConfigurationError.unableToFindPeerId
-                }
-
-                let userProfile = try await self.profileSession.getProfile(for: peerId)
-
-                let profile = ProfileAppEntity(id: userProfile.id, displayString: userProfile.name)
-
-                let conversation = ConversationAppEntity(id: userConversation.id, displayString: userProfile.name)
-
+            return cache.conversations.map { cachedConversation in
+                let profile = ProfileAppEntity(id: cachedConversation.peer.id,
+                                               displayString: cachedConversation.peer.name)
+                let conversation = ConversationAppEntity(id: cachedConversation.conversationId,
+                                                         displayString: cachedConversation.peer.name)
                 conversation.peer = profile
-
                 return conversation
-            }.sorted { lhs, rhs in
-                guard let lhsPeer = lhs.peer,
-                      let rhsPeer = rhs.peer else {
-                    return true
-                }
-
-                return lhsPeer.displayString.lowercased() < rhsPeer.displayString.lowercased()
             }
         }
 
@@ -79,4 +57,3 @@ struct ConversationAppEntity: AppEntity {
         self.displayString = displayString
     }
 }
-

@@ -42,6 +42,8 @@ public final class InvitesSessionImpl: InvitesSession {
 
     private let functions = Functions.functions(region: "europe-west1")
 
+    private let replayProtectedCallableOptions = HTTPSCallableOptions(requireLimitedUseAppCheckTokens: true)
+
     private let lock = NSLock()
 
     private let syncQueue = DispatchQueue(label: "InvitesSession")
@@ -119,7 +121,9 @@ public final class InvitesSessionImpl: InvitesSession {
     }
 
     private func doUpdateInvites(for userId: String, peerId: String) async throws {
-        _ = try await self.functions.httpsCallable("updateInvites").call(["peerId": peerId])
+        _ = try await self.functions
+            .httpsCallable("updateInvites", options: self.replayProtectedCallableOptions)
+            .call(["peerId": peerId])
     }
 
 }

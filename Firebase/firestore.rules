@@ -19,12 +19,22 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // Reports - authenticated users can submit reports keyed by the reported user id,
-    // but only the reported user can read their aggregated report document.
+    // Reports - authenticated users can create immutable report entries.
     match /reports/{reportId} {
-      allow read: if request.auth.uid == reportId;
-      allow create, update: if request.auth != null;
-      allow delete: if false;
+      allow read, write: if false;
+
+      match /entries/{entryId} {
+        allow create: if request.auth != null
+          && request.resource.data.keys().hasOnly(['issue', 'subIssue', 'timestamp', 'reporterId', 'id'])
+          && request.resource.data.issue is string
+          && request.resource.data.subIssue is string
+          && request.resource.data.timestamp is timestamp
+          && request.resource.data.reporterId is string
+          && request.resource.data.id is string
+          && request.resource.data.reporterId == request.auth.uid
+          && request.resource.data.id == entryId;
+        allow read, update, delete: if false;
+      }
     }
 
     // Default deny for everything else

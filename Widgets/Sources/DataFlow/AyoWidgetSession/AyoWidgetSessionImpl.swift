@@ -1,44 +1,36 @@
 import Foundation
+import AyoWidgetCacheStore
 import Dependencies
-import AuthSession
-import ProfileSession
-import ConversationsSession
+import HapticsConfiguration
 import RemoteDataModels
 
 final class AyoWidgetSessionImpl: AyoWidgetSession {
 
-    @Dependency(\.authSession) private var authSession
-
-    @Dependency(\.conversationsSession) private var conversationsSession
-
-    @Dependency(\.profileSession) private var profileSession
+    @Dependency(\.configuration) private var configuration
 
     func entry(for conversationId: String) async -> AyoWidgetEntry {
-        guard let userId = self.authSession.state.userId else {
+        let store = AyoWidgetCacheStore(appGroup: self.configuration.appGroup)
+        let cache = store.load()
+
+        switch cache.authState {
+        case .unknown:
+            return AyoWidgetEntry(type: .skeleton)
+        case .loggedOut:
             return AyoWidgetEntry(type: .loggedOut)
-        }
-
-        do {
-            let conversation = try await self.conversationsSession.conversation(with: conversationId)
-
-            guard let peerId = conversation.peers.first(where: { peerId in
-                peerId != userId
+        case .authenticated:
+            guard let conversation = cache.conversations.first(where: { conversation in
+                conversation.conversationId == conversationId
             }) else {
                 return AyoWidgetEntry(type: .empty)
             }
 
-            let profile = try await self.profileSession.getProfile(for: peerId)
+            let profile = RemoteDataModels.Profile(id: conversation.peer.id,
+                                                   name: conversation.peer.name,
+                                                   username: conversation.peer.username,
+                                                   emoji: conversation.peer.emoji)
 
             return AyoWidgetEntry(type: .selected(AyoWidgetEntry.SelectedData(peer: profile,
-                                                                              conversationId: conversation.id)))
-        } catch let error as ConversationsSessionManagerError {
-            if case .conversationDoesntExist = error {
-                return AyoWidgetEntry(type: .empty)
-            }
-
-            return AyoWidgetEntry(type: .skeleton)
-        } catch {
-            return AyoWidgetEntry(type: .skeleton)
+                                                                              conversationId: conversation.conversationId)))
         }
     }
 

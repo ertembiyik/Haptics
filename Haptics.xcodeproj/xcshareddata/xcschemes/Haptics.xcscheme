@@ -50,6 +50,13 @@
             ReferencedContainer = "container:Haptics.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "FIRAAppCheckDebugToken"
+            value = "E3B0A24D-0687-46DA-B0EA-160159E0B2B7"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
          <AdditionalOption
             key = "PrefersMallocStackLoggingLite"

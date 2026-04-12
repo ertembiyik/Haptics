@@ -1,8 +1,5 @@
 import Foundation
 import AppIntents
-import FirebaseCore
-import FirebaseAnalytics
-import FirebaseCrashlytics
 
 @available(iOS 17.0, *)
 struct AyoWidgetConfiguration: AppIntent, WidgetConfigurationIntent, CustomIntentMigratedAppIntent {
@@ -20,16 +17,8 @@ struct AyoWidgetConfiguration: AppIntent, WidgetConfigurationIntent, CustomInten
     @Parameter(title: "Friend")
     var conversation: ConversationAppEntity?
 
-    init() {
-        if FirebaseApp.app() == nil {
-            FirebaseApp.configure()
-        }
-    }
-
     func perform() async throws -> some IntentResult {
         return .result()
     }
 
 }
-
-
