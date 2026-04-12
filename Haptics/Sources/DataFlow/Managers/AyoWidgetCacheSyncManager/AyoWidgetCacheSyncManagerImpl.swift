@@ -46,6 +46,16 @@ final class AyoWidgetCacheSyncManagerImpl: AyoWidgetCacheSyncManager {
             }
             .store(in: &self.cancellables)
 
+        self.conversationsSession.hasEmptyConversationsPublisher
+            .removeDuplicates { lhs, rhs in
+                lhs == rhs
+            }
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.scheduleSync()
+            }
+            .store(in: &self.cancellables)
+
         self.scheduleSync()
     }
 
@@ -84,8 +94,25 @@ final class AyoWidgetCacheSyncManagerImpl: AyoWidgetCacheSyncManager {
             return
         }
 
+        if self.conversationsSession.hasEmptyConversations == true {
+            let cache = AyoWidgetCache(authState: .authenticated,
+                                       conversations: [])
+
+            if !Task.isCancelled && store.save(cache) && !Task.isCancelled {
+                self.widgetsSession.reloadAllWidgets()
+            }
+
+            return
+        }
+
+        let conversationIds = Array(self.conversationsSession.conversations.keys)
+
+        guard !conversationIds.isEmpty else {
+            return
+        }
+
         do {
-            let conversations = try await self.conversationsSession.currentConversations(shouldOmitCache: true)
+            let conversations = try await self.currentConversations(for: conversationIds)
             guard !Task.isCancelled else {
                 return
             }
@@ -107,6 +134,26 @@ final class AyoWidgetCacheSyncManagerImpl: AyoWidgetCacheSyncManager {
             }
 
             Logger.default.error("Failed to sync ayo widget cache: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+    private func currentConversations(for conversationIds: [String]) async throws -> [RemoteDataModels.Conversation] {
+        let uniqueConversationIds = Array(Set(conversationIds))
+
+        return try await withThrowingTaskGroup(of: RemoteDataModels.Conversation.self) { taskGroup in
+            for conversationId in uniqueConversationIds {
+                taskGroup.addTask {
+                    return try await self.conversationsSession.conversation(with: conversationId)
+                }
+            }
+
+            var conversations = [RemoteDataModels.Conversation]()
+
+            for try await conversation in taskGroup {
+                conversations.append(conversation)
+            }
+
+            return conversations
         }
     }
 

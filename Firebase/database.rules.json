@@ -1,7 +1,7 @@
 {
   "rules": {
     "appUpdateConfig": {
-      ".read": "auth !== null",
+      ".read": "true",
       ".write": "false"
     },
     "haptics": {

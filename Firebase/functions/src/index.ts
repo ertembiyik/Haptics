@@ -182,12 +182,6 @@ async function acquireThrottle(path: string, barrierInSeconds: number, message: 
     }
 }
 
-function rejectConsumedAppCheckToken(event: { app?: { alreadyConsumed?: boolean } | null }): void {
-    if (event.app?.alreadyConsumed) {
-        throw new HttpsError("permission-denied", "App Check token has already been consumed. Retry the request.");
-    }
-}
-
 async function userExists(userId: string): Promise<boolean> {
     const userDoc = await firestore.collection("users").doc(userId).get();
     return userDoc.exists;
@@ -1119,7 +1113,6 @@ exports.removeConversation = functions.https.onCall({
 exports.sendRequest = functions.https.onCall({
     region: FUNCTIONS_REGION,
     enforceAppCheck: true,
-    consumeAppCheckToken: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1127,8 +1120,6 @@ exports.sendRequest = functions.https.onCall({
         if (!userId) {
             throw new HttpsError("unauthenticated", "The function must be called with auth.");
         }
-
-        rejectConsumedAppCheckToken(event);
 
         const peerId = event.data.peerId;
 
@@ -1287,7 +1278,6 @@ exports.blockUser = functions.https.onCall({
 exports.updateInvites = functions.https.onCall({
     region: FUNCTIONS_REGION,
     enforceAppCheck: true,
-    consumeAppCheckToken: true,
 }, async (event) => {
     try {
         const userId = event.auth?.uid;
@@ -1295,8 +1285,6 @@ exports.updateInvites = functions.https.onCall({
         if (!userId) {
             throw new HttpsError("unauthenticated", "The function must be called with auth.");
         }
-
-        rejectConsumedAppCheckToken(event);
 
         const peerId = event.data.peerId;
 

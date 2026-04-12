@@ -5,28 +5,8 @@ import FirebaseCore
 enum AppCheckBootstrap {
 
     static func configure() {
-        AppCheck.setAppCheckProviderFactory(self.makeProviderFactory())
+        AppCheck.setAppCheckProviderFactory(HapticsAppCheckProviderFactory())
     }
-
-    private static func makeProviderFactory() -> AppCheckProviderFactory {
-#if DEBUG
-        if self.shouldUseDebugProvider {
-            return AppCheckDebugProviderFactory()
-        }
-#endif
-
-        return HapticsAppCheckProviderFactory()
-    }
-
-#if DEBUG
-    private static var shouldUseDebugProvider: Bool {
-#if targetEnvironment(simulator)
-        return true
-#else
-        return ProcessInfo.processInfo.environment["FIRAAppCheckDebugToken"] != nil
-#endif
-    }
-#endif
 
 }
 

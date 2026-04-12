@@ -140,6 +140,8 @@ final class SendRequestController: UIViewController {
 
                 await self.showFullscreen(error: error)
             } catch {
+                Logger.friends.error("Error sending request: \(error.localizedDescription, privacy: .public)")
+
                 await MainActor.run {
                     self.sendRequestButton.stopLoading()
                 }

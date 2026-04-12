@@ -5,6 +5,7 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseFirestore
 import FirebaseFunctions
+import FirebaseAppCheck
 import OSLog
 import FirebaseMessaging
 import LoggerExtensions
@@ -34,6 +35,8 @@ class AppDelegate: UIResponder,
         AppCheckBootstrap.configure()
         FirebaseApp.configure()
         self.configureFirebaseEmulatorsIfNeeded()
+        self.observeAppCheckTokenChanges()
+        self.prewarmAppCheck()
 
         Logger.default.logHeader(appId: AppInfoProvider.shared.appId,
                                  appVersion: AppInfoProvider.shared.appVersion)
@@ -94,6 +97,46 @@ class AppDelegate: UIResponder,
 
         Logger.default.info("Configured local Firebase emulators at host: \(host, privacy: .public)")
 
+    }
+
+    private func observeAppCheckTokenChanges() {
+        NotificationCenter.default.addObserver(forName: .AppCheckTokenDidChange,
+                                               object: nil,
+                                               queue: .main) { _ in
+            self.reconnectRealtimeDatabase(reason: "App Check token changed")
+        }
+    }
+
+    private func prewarmAppCheck() {
+        AppCheck.appCheck().token(forcingRefresh: false) { token, error in
+            if let error {
+                Logger.default.error("Failed to fetch App Check token during launch: \(error.localizedDescription, privacy: .public)")
+                return
+            }
+
+            guard let token else {
+                Logger.default.error("App Check token fetch completed without a token.")
+                return
+            }
+
+            Logger.default.info("Fetched App Check token that expires at: \(token.expirationDate.description, privacy: .public)")
+
+            self.reconnectRealtimeDatabase(reason: "App Check token fetched")
+        }
+    }
+
+    private func reconnectRealtimeDatabase(reason: String) {
+        let realtimeDatabaseUrl = Bundle.main.infoDictionary?["FIREBASE_RTDB_URL"] as? String ?? ""
+
+        guard !realtimeDatabaseUrl.isEmpty else {
+            return
+        }
+
+        let database = Database.database(url: realtimeDatabaseUrl)
+        database.goOffline()
+        database.goOnline()
+
+        Logger.default.info("Reconnected Realtime Database: \(reason, privacy: .public)")
     }
 
 }
