@@ -656,7 +656,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
@@ -690,7 +690,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
@@ -853,7 +853,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -896,7 +896,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -937,7 +937,7 @@
 				APP_GROUP = group.com.ertembiyik.Haptics;
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AyoIntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AyoIntentExtension;
@@ -965,7 +965,7 @@
 				APP_GROUP = group.com.ertembiyik.Haptics;
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AyoIntentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AyoIntentExtension;
