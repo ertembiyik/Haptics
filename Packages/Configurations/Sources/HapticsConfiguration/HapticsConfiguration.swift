@@ -4,11 +4,17 @@ import Configuration
 
 public final class HapticsConfiguration: Configuration {
 
-    public let appGroup = Bundle.main.infoDictionary?["APP_GROUP"] as? String ?? ""
+    public var appGroup: String {
+        Self.requiredInfoPlistString("APP_GROUP")
+    }
 
-    public let ayoWidgetKind = "com.ertembiyik.Haptics.Widgets.Ayo"
+    public var ayoWidgetKind: String {
+        Self.requiredInfoPlistString("AYO_WIDGET_KIND")
+    }
 
-    public let realtimeDatabaseUrl = Bundle.main.infoDictionary?["FIREBASE_RTDB_URL"] as? String ?? ""
+    public var realtimeDatabaseUrl: String {
+        Self.requiredInfoPlistString("FIREBASE_RTDB_URL")
+    }
 
     public let userConversationsPath = "userConversations"
 

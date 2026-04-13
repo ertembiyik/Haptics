@@ -6,7 +6,18 @@ open class Configuration {
 
     }
 
-    public let keyChainGroup = Bundle.main.infoDictionary?["KEYCHAIN_ACCESS_GROUP"] as? String ?? ""
+    public class func requiredInfoPlistString(_ key: String) -> String {
+        guard let value = Bundle.main.infoDictionary?[key] as? String,
+              !value.isEmpty else {
+            preconditionFailure("Missing \(key) in Info.plist")
+        }
+
+        return value
+    }
+
+    public var keyChainGroup: String {
+        Self.requiredInfoPlistString("KEYCHAIN_ACCESS_GROUP")
+    }
 
     public let usersPath = "users"
 

@@ -52,7 +52,6 @@
 		F471CAA22CC835280093FB7E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F471CAA12CC835280093FB7E /* Dependencies */; };
 		F471CAAA2CC854A90093FB7E /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = F471CAA92CC854A90093FB7E /* AppIntentVocabulary.plist */; };
 		F477949F2BE80FD900320E63 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F477949E2BE80FD900320E63 /* Base */; };
-		F47794A72BE8101700320E63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47794A62BE8101700320E63 /* GoogleService-Info.plist */; };
 		F47795932BE811E700320E63 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = F47795922BE811E700320E63 /* Dependencies */; };
 		F47795982BE811F300320E63 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = F47795972BE811F300320E63 /* PinLayout */; };
 		F47797472BE8161E00320E63 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F47797462BE8161E00320E63 /* MCEmojiPicker */; };
@@ -102,6 +101,13 @@
 
 /* Begin PBXFileReference section */
 		A90110012F8C100000B94C7F /* AyoWidgetCacheStore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AyoWidgetCacheStore; sourceTree = "<group>"; };
+		A9B100022F8D900000000001 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		A9B100032F8D900000000001 /* Haptics.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Haptics.xcconfig; sourceTree = "<group>"; };
+		A9B100042F8D900000000001 /* Widgets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Widgets.xcconfig; sourceTree = "<group>"; };
+		A9B100052F8D900000000001 /* AyoIntentExtension.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AyoIntentExtension.xcconfig; sourceTree = "<group>"; };
+		A9B100062F8D900000000001 /* GoogleService-Info.plist.example */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist.example"; sourceTree = "<group>"; };
+		A9B100072F8D900000000001 /* GoogleService-Info.plist.example */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist.example"; sourceTree = "<group>"; };
+		A9B100082F8D900000000001 /* GoogleService-Info.plist.example */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist.example"; sourceTree = "<group>"; };
 		F40635DA2CC4006B00F0493B /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F40635DB2CC4006B00F0493B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		F40635DD2CC4006B00F0493B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -129,7 +135,6 @@
 		F477948F2BE80FD800320E63 /* Haptics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haptics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F477949E2BE80FD900320E63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F47794A02BE80FD900320E63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F47794A62BE8101700320E63 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F47797482BE81D2800320E63 /* Haptics.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Haptics.entitlements; sourceTree = "<group>"; };
 		F47990602CB51F2F000FA9D5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F498F2C52CC43FAB00E5DDBC /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -137,8 +142,6 @@
 		F4C3BAF62CC4585700DB44CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4C3BAFF2CC4585C00DB44CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CCC5B22CC6D8310040F6A2 /* LinksFactory */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LinksFactory; sourceTree = "<group>"; };
-		F4F609A02CC5873D000483E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F4F609A42CC58A3A000483E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4F609AE2CC58BA8000483E1 /* AyoIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AyoIntentExtension.entitlements; sourceTree = "<group>"; };
 		F4F609AF2CC5AD7C000483E1 /* WidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetsExtension.entitlements; sourceTree = "<group>"; };
 		F4F609B02CC5B74E000483E1 /* WidgetsSession */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = WidgetsSession; sourceTree = "<group>"; };
@@ -248,6 +251,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A9B100012F8D900000000001 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				A9B100022F8D900000000001 /* Project.xcconfig */,
+				A9B100032F8D900000000001 /* Haptics.xcconfig */,
+				A9B100042F8D900000000001 /* Widgets.xcconfig */,
+				A9B100052F8D900000000001 /* AyoIntentExtension.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		F438E7C92CC548FC008652F1 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +299,7 @@
 				F47794912BE80FD800320E63 /* Haptics */,
 				F4C3BAF72CC4585700DB44CF /* Widgets */,
 				F4C3BB012CC4585C00DB44CF /* AyoIntentExtension */,
+				A9B100012F8D900000000001 /* Configuration */,
 				F438E7C92CC548FC008652F1 /* Packages */,
 				F47794902BE80FD800320E63 /* Products */,
 				F47797502BE8242C00320E63 /* Frameworks */,
@@ -309,7 +324,7 @@
 				F477949D2BE80FD900320E63 /* LaunchScreen.storyboard */,
 				F47797482BE81D2800320E63 /* Haptics.entitlements */,
 				F47794A02BE80FD900320E63 /* Info.plist */,
-				F47794A62BE8101700320E63 /* GoogleService-Info.plist */,
+				A9B100062F8D900000000001 /* GoogleService-Info.plist.example */,
 				F471CAA92CC854A90093FB7E /* AppIntentVocabulary.plist */,
 				F47990602CB51F2F000FA9D5 /* PrivacyInfo.xcprivacy */,
 			);
@@ -332,7 +347,7 @@
 				A806173C2F8ACA0100EAC9F4 /* Resources */,
 				A806171F2F8AC9FB00EAC9F4 /* Sources */,
 				F4C3BAF62CC4585700DB44CF /* Info.plist */,
-				F4F609A02CC5873D000483E1 /* GoogleService-Info.plist */,
+				A9B100072F8D900000000001 /* GoogleService-Info.plist.example */,
 				F4F609AF2CC5AD7C000483E1 /* WidgetsExtension.entitlements */,
 			);
 			path = Widgets;
@@ -343,7 +358,7 @@
 			children = (
 				A80617422F8ACA0D00EAC9F4 /* Sources */,
 				F4F609AE2CC58BA8000483E1 /* AyoIntentExtension.entitlements */,
-				F4F609A42CC58A3A000483E1 /* GoogleService-Info.plist */,
+				A9B100082F8D900000000001 /* GoogleService-Info.plist.example */,
 				F4C3BAFF2CC4585C00DB44CF /* Info.plist */,
 			);
 			path = AyoIntentExtension;
@@ -359,6 +374,7 @@
 				F40635D62CC4006B00F0493B /* Sources */,
 				F40635D72CC4006B00F0493B /* Frameworks */,
 				F40635D82CC4006B00F0493B /* Resources */,
+				A9B1000A2F8D900000000001 /* Copy GoogleService-Info.plist */,
 			);
 			buildRules = (
 			);
@@ -390,6 +406,7 @@
 				F477948C2BE80FD800320E63 /* Frameworks */,
 				A8C3D0012F8D7E00007968C3 /* Generate Settings Bundle */,
 				F477948D2BE80FD800320E63 /* Resources */,
+				A9B100092F8D900000000001 /* Copy GoogleService-Info.plist */,
 				F40635F02CC4006D00F0493B /* Embed Foundation Extensions */,
 				F4C21F032C112C0C00354EF5 /* Crashlytics */,
 			);
@@ -457,6 +474,7 @@
 				F4C3BACE2CC44DF700DB44CF /* Sources */,
 				F4C3BACF2CC44DF700DB44CF /* Frameworks */,
 				F4C3BAD02CC44DF700DB44CF /* Resources */,
+				A9B1000B2F8D900000000001 /* Copy GoogleService-Info.plist */,
 			);
 			buildRules = (
 			);
@@ -534,7 +552,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F47794A72BE8101700320E63 /* GoogleService-Info.plist in Resources */,
 				F471CAAA2CC854A90093FB7E /* AppIntentVocabulary.plist in Resources */,
 				F477949F2BE80FD900320E63 /* Base in Resources */,
 				F47990612CB51F2F000FA9D5 /* PrivacyInfo.xcprivacy in Resources */,
@@ -572,6 +589,69 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Configuration/generate-package-list.sh\"\n";
+		};
+		A9B100092F8D900000000001 /* Copy GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Configuration/copy-google-service-info.sh",
+				"$(GOOGLE_SERVICE_INFO_PLIST_SOURCE)",
+			);
+			name = "Copy GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"${SRCROOT}/Configuration/copy-google-service-info.sh\"\n";
+		};
+		A9B1000A2F8D900000000001 /* Copy GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Configuration/copy-google-service-info.sh",
+				"$(GOOGLE_SERVICE_INFO_PLIST_SOURCE)",
+			);
+			name = "Copy GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"${SRCROOT}/Configuration/copy-google-service-info.sh\"\n";
+		};
+		A9B1000B2F8D900000000001 /* Copy GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Configuration/copy-google-service-info.sh",
+				"$(GOOGLE_SERVICE_INFO_PLIST_SOURCE)",
+			);
+			name = "Copy GoogleService-Info.plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"${SRCROOT}/Configuration/copy-google-service-info.sh\"\n";
 		};
 		F4C21F032C112C0C00354EF5 /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -650,8 +730,8 @@
 /* Begin XCBuildConfiguration section */
 		F40635F12CC4006D00F0493B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100042F8D900000000001 /* Widgets.xcconfig */;
 			buildSettings = {
-				APP_GROUP = group.com.ertembiyik.Haptics;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
@@ -669,7 +749,6 @@
 				);
 				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics.Widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -684,8 +763,8 @@
 		};
 		F40635F22CC4006D00F0493B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100042F8D900000000001 /* Widgets.xcconfig */;
 			buildSettings = {
-				APP_GROUP = group.com.ertembiyik.Haptics;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
@@ -703,7 +782,6 @@
 				);
 				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics.Widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -718,6 +796,7 @@
 		};
 		F47794A12BE80FD900320E63 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100022F8D900000000001 /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
@@ -753,11 +832,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MD55Y22MQS;
 				EAGER_LINKING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -787,6 +865,7 @@
 		};
 		F47794A22BE80FD900320E63 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100022F8D900000000001 /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
@@ -821,10 +900,9 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = MD55Y22MQS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -847,15 +925,14 @@
 		};
 		F47794A42BE80FD900320E63 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100032F8D900000000001 /* Haptics.xcconfig */;
 			buildSettings = {
-				APP_GROUP = group.com.ertembiyik.Haptics;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 54;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Haptics/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Haptics;
@@ -866,18 +943,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STOREKIT_GROUP_ID = 21517446;
-				STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
-				STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -890,15 +962,14 @@
 		};
 		F47794A52BE80FD900320E63 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100032F8D900000000001 /* Haptics.xcconfig */;
 			buildSettings = {
-				APP_GROUP = group.com.ertembiyik.Haptics;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Haptics/Haptics.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 54;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FIREBASE_RTDB_URL = "https://haptics-e7a1c-default-rtdb.europe-west1.firebasedatabase.app";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Haptics/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Haptics;
@@ -909,18 +980,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				KEYCHAIN_ACCESS_GROUP = MD55Y22MQS.com.ertembiyik.group;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				STOREKIT_GROUP_ID = 21517446;
-				STOREKIT_MONTHLY_PRODUCT_ID = haptics_pro_1_month;
-				STOREKIT_YEARLY_PRODUCT_ID = haptics_pro_1_year;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -933,8 +999,8 @@
 		};
 		F4C3BADC2CC44DF700DB44CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100052F8D900000000001 /* AyoIntentExtension.xcconfig */;
 			buildSettings = {
-				APP_GROUP = group.com.ertembiyik.Haptics;
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 54;
@@ -950,7 +1016,6 @@
 				);
 				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics.AyoIntentExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -961,8 +1026,8 @@
 		};
 		F4C3BADD2CC44DF700DB44CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9B100052F8D900000000001 /* AyoIntentExtension.xcconfig */;
 			buildSettings = {
-				APP_GROUP = group.com.ertembiyik.Haptics;
 				CODE_SIGN_ENTITLEMENTS = AyoIntentExtension/AyoIntentExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 54;
@@ -978,7 +1043,6 @@
 				);
 				MARKETING_VERSION = 1.3;
 				OTHER_LDFLAGS = "-Objc";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ertembiyik.Haptics.AyoIntentExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

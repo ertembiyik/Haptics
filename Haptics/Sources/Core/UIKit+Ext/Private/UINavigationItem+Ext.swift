@@ -3,11 +3,14 @@ import UIKit
 final class NavigationBarPaletteFactory {
 
     static func palette(with contentView: UIView) -> UIView {
-        let paletteClass = PAPI._papic(/*_UINavigationBarPalette*/"=UGd0VGbhBlchJkbvlGdhdWa2FmTJV1X") as! UIView.Type
+        // Private UIKit class/selectors. Obfuscate these in production if you keep shipping this path.
+        let paletteClass = NSClassFromString("_UINavigationBarPalette") as! UIView.Type
+        let allocSelector = NSSelectorFromString("alloc")
+        let initializerSelector = NSSelectorFromString("initWithContentView:")
 
-        let palette = paletteClass.perform(PAPI._papis(/*alloc*/"=M2bsxWY"))
+        let palette = paletteClass.perform(allocSelector)
             .takeUnretainedValue()
-            .perform(PAPI._papis(/*initWithContentView:*/"=ozdllmV05WZ052bDhGdpdFdp5Wa"), with: contentView)
+            .perform(initializerSelector, with: contentView)
             .takeUnretainedValue()
 
         return palette as! UIView
@@ -18,7 +21,8 @@ final class NavigationBarPaletteFactory {
 extension UINavigationItem {
 
     func setBottom(palette: UIView) {
-        let selector = PAPI._papis(/*_setBottomPalette*/"6UGd0VGbhBVbvRHdvJEdlN3X")
+        // Private API selector. Obfuscate this in production if you keep shipping this path.
+        let selector = NSSelectorFromString("_setBottomPalette")
         self.perform(selector, with: palette)
     }
 

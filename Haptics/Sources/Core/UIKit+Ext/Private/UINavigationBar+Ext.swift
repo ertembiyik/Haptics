@@ -4,12 +4,15 @@ extension UINavigationBar {
 
     var backgroundOpacity: CGFloat {
         get {
-            let key = PAPI.decode(/*_backgroundOpacity*/"5RXajFGcPRmb19mcnt2YhJ2X")
+            // Private API key. Obfuscate this in production if you keep shipping this path.
+            let key = "_backgroundOpacity"
             return self.value(forKey: key) as! CGFloat
         }
 
         set {
-            self.perform(PAPI._papis(/*_setBackgroundOpacity:*/"==gO5RXajFGcPRmb19mcnt2YhJEdlN3X"), with: newValue)
+            // Private API selector. Obfuscate this in production if you keep shipping this path.
+            let selector = NSSelectorFromString("_setBackgroundOpacity:")
+            self.perform(selector, with: newValue)
         }
     }
 

@@ -10,12 +10,15 @@ import OSLog
 import FirebaseMessaging
 import LoggerExtensions
 import Utils
+import HapticsConfiguration
 
 @main
 class AppDelegate: UIResponder,
                    UIApplicationDelegate,
                    UNUserNotificationCenterDelegate,
                    MessagingDelegate {
+
+    private let configuration = HapticsConfiguration()
 
     private static let shouldForceLocalEmulatorBootstrap: Bool = {
 #if DEBUG
@@ -63,7 +66,7 @@ class AppDelegate: UIResponder,
         let databasePort = Int(environment["FIREBASE_DATABASE_EMULATOR_PORT"] ?? "") ?? 9000
         let functionsPort = Int(environment["FIREBASE_FUNCTIONS_EMULATOR_PORT"] ?? "") ?? 5001
         let authPort = Int(environment["FIREBASE_AUTH_EMULATOR_PORT"] ?? "") ?? 9099
-        let realtimeDatabaseUrl = Bundle.main.infoDictionary?["FIREBASE_RTDB_URL"] as? String ?? ""
+        let realtimeDatabaseUrl = self.configuration.realtimeDatabaseUrl
         let firestore = Firestore.firestore()
 
         firestore.useEmulator(withHost: host, port: firestorePort)
@@ -80,9 +83,7 @@ class AppDelegate: UIResponder,
             }
         }
 
-        if !realtimeDatabaseUrl.isEmpty {
-            Database.database(url: realtimeDatabaseUrl).useEmulator(withHost: host, port: databasePort)
-        }
+        Database.database(url: realtimeDatabaseUrl).useEmulator(withHost: host, port: databasePort)
 
         Functions.functions(region: "europe-west1").useEmulator(withHost: host, port: functionsPort)
 
@@ -126,11 +127,7 @@ class AppDelegate: UIResponder,
     }
 
     private func reconnectRealtimeDatabase(reason: String) {
-        let realtimeDatabaseUrl = Bundle.main.infoDictionary?["FIREBASE_RTDB_URL"] as? String ?? ""
-
-        guard !realtimeDatabaseUrl.isEmpty else {
-            return
-        }
+        let realtimeDatabaseUrl = self.configuration.realtimeDatabaseUrl
 
         let database = Database.database(url: realtimeDatabaseUrl)
         database.goOffline()

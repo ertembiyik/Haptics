@@ -14,6 +14,8 @@
 	<string>$(KEYCHAIN_ACCESS_GROUP)</string>
 	<key>APP_GROUP</key>
 	<string>$(APP_GROUP)</string>
+	<key>AYO_WIDGET_KIND</key>
+	<string>$(AYO_WIDGET_KIND)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSUserActivityTypes</key>

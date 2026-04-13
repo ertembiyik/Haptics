@@ -4,6 +4,8 @@
 <dict>
 	<key>APP_GROUP</key>
 	<string>$(APP_GROUP)</string>
+	<key>AYO_WIDGET_KIND</key>
+	<string>$(AYO_WIDGET_KIND)</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>
