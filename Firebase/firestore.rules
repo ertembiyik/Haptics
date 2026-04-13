@@ -1,0 +1,45 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Push tokens - only the owner can read/write their tokens
+    match /pushTokens/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+
+    // Users - owners can update their profile, authenticated users can read
+    match /users/{userId} {
+      allow update, create, delete: if request.auth.uid == userId;
+      allow read: if request.auth != null;
+    }
+
+    // Conversations - only peers can read, writes handled by cloud functions
+    match /conversations/{conversationId} {
+      allow read: if request.auth.uid in resource.data.peers;
+      allow write: if false;
+    }
+
+    // Reports - authenticated users can create immutable report entries.
+    match /reports/{reportId} {
+      allow read, write: if false;
+
+      match /entries/{entryId} {
+        allow create: if request.auth != null
+          && request.resource.data.keys().hasOnly(['issue', 'subIssue', 'timestamp', 'reporterId', 'id'])
+          && request.resource.data.issue is string
+          && request.resource.data.subIssue is string
+          && request.resource.data.timestamp is timestamp
+          && request.resource.data.reporterId is string
+          && request.resource.data.id is string
+          && request.resource.data.reporterId == request.auth.uid
+          && request.resource.data.id == entryId;
+        allow read, update, delete: if false;
+      }
+    }
+
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

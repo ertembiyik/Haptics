@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "MD55Y22MQS.com.ertembiyik.Haptics"
+        ],
+        "components": [
+          {
+            "/": "/users/*",
+            "comment": "Users"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sketchLifetimeDuration</key>
+	<string>6</string>
+	<key>minimumDistanceFactorBetweenPointsInSketch</key>
+	<string>0.1</string>
+	<key>maxPointsInDrawableSketch</key>
+	<string>150</string>
+	<key>epsilonPointsCompression</key>
+	<string>1</string>
+	<key>freeEmojisInvitesCount</key>
+	<string>2</string>
+</dict>
+</plist>

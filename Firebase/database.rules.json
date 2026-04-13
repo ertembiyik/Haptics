@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "appUpdateConfig": {
+      ".read": "true",
+      ".write": "false"
+    },
+    "haptics": {
+      "$conversationId": {
+        ".read": "auth !== null && root.child('userConversationsIndex').child(auth.uid).child($conversationId).val() === true",
+        ".write": "auth !== null && root.child('userConversationsIndex').child(auth.uid).child($conversationId).val() === true",
+        ".validate": "newData.hasChildren(['id', 'senderId', 'timestamp', 'type'])",
+        "id": {
+          ".validate": "newData.isString()"
+        },
+        "senderId": {
+          ".validate": "newData.isString() && newData.val() === auth.uid"
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        },
+        "type": {
+          ".validate": "newData.hasChild('type') && newData.child('type').isString()",
+          "type": {
+            ".validate": "newData.val() === 'default' || newData.val() === 'emoji' || newData.val() === 'empty' || newData.val() === 'sketch'"
+          }
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      }
+    },
+    "userConversations": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "userConversationsIndex": {
+      "$userId": {
+        ".read": "false",
+        ".write": "false"
+      }
+    },
+    "userBlocks": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "requests": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    },
+    "invites": {
+      "$userId": {
+        ".read": "$userId === auth.uid",
+        ".write": "false"
+      }
+    }
+  }
+}
