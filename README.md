@@ -50,6 +50,17 @@ Haptics uses an MVVM-style architecture with dependency injection, a session pat
 
 Each domain has a single source of truth. For example, [`AuthSession`](Packages/SharedSessions/Sources/AuthSession/AuthSession.swift) owns auth state and publishes it to the app and the widgets.
 
+## Project Structure
+
+| Path | Contents |
+| --- | --- |
+| `Haptics/` | Main app target |
+| `Widgets/` | Home Screen widget extension |
+| `AyoIntentExtension/` | Intents extension |
+| `Packages/` | Local Swift packages: shared-state sessions (`SharedSessions`, `ConversationsSession`, `ProfileSession`, …), UI (`UIComponents`, `SharedUI`), `Effects`, and Foundation, UIKit, and Combine extensions |
+| `Firebase/` | Cloud Functions, Realtime Database and Firestore rules, and Hosting |
+| `Configuration/` | xcconfig files and build scripts |
+
 ## Acknowledgments
 
 - [Firebase](https://github.com/firebase/firebase-ios-sdk)
