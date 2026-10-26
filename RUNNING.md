@@ -1,5 +1,12 @@
 # Running Haptics
 
+## Quick Start (Simulator)
+
+1. Copy `Configuration/Secrets.xcconfig.example` to `Configuration/Secrets.xcconfig` and fill it in ([step 1](#1-create-local-config-files)).
+2. Create a Firebase project and place the three `GoogleService-Info.plist` files ([step 2](#2-create-the-firebase-project)).
+3. Run `firebase emulators:start` from `Firebase/` ([step 5](#simulator-path)).
+4. Run the `Haptics` scheme on an iOS 18 simulator.
+
 ## Prerequisites
 
 - Xcode 16 or newer
@@ -21,13 +28,15 @@
 
 3. Set these values before you open Xcode:
 
-   - `DEVELOPMENT_TEAM`: your Apple team ID
-   - `HAPTICS_BUNDLE_IDENTIFIER`: the main app bundle ID you want to use
-   - `WIDGETS_BUNDLE_IDENTIFIER`: usually `$(HAPTICS_BUNDLE_IDENTIFIER).Widgets`
-   - `AYO_INTENT_EXTENSION_BUNDLE_IDENTIFIER`: usually `$(HAPTICS_BUNDLE_IDENTIFIER).AyoIntentExtension`
-   - `APP_GROUP`: one shared app group used by the app, widget, and intent extension
-   - `KEYCHAIN_ACCESS_GROUP`: the keychain group you want to use with your Apple team
-   - `FIREBASE_RTDB_URL`: your Realtime Database URL from Firebase, using the `https:/$()/...` syntax already shown in the template so xcconfig does not treat `//` as a comment
+   | Key | Value |
+   | --- | --- |
+   | `DEVELOPMENT_TEAM` | Your Apple team ID |
+   | `HAPTICS_BUNDLE_IDENTIFIER` | The main app bundle ID you want to use |
+   | `WIDGETS_BUNDLE_IDENTIFIER` | Usually `$(HAPTICS_BUNDLE_IDENTIFIER).Widgets` |
+   | `AYO_INTENT_EXTENSION_BUNDLE_IDENTIFIER` | Usually `$(HAPTICS_BUNDLE_IDENTIFIER).AyoIntentExtension` |
+   | `APP_GROUP` | One shared app group used by the app, widget, and intent extension |
+   | `KEYCHAIN_ACCESS_GROUP` | The keychain group you want to use with your Apple team |
+   | `FIREBASE_RTDB_URL` | Your Realtime Database URL, using the `https:/$()/...` syntax from the template so xcconfig does not treat `//` as a comment |
 
 ## 2. Create the Firebase project
 
@@ -129,7 +138,7 @@ Use this if you want to hit your real Firebase project.
 
 ## Notes
 
-- The real `GoogleService-Info.plist` files are intentionally ignored by git. The build now copies them into each bundle from the local paths above.
+- The real `GoogleService-Info.plist` files are intentionally ignored by git. The build copies them into each bundle from the local paths above.
 - The tracked `*.example` plist files are only placeholders. They are there to document the expected shape, not to be bundled.
 - The widget kind is derived from `WIDGETS_BUNDLE_IDENTIFIER`, so if you change the bundle IDs in `Secrets.xcconfig` the app and widget stay in sync.
 - The repo still contains production URLs under `Packages/LinksFactory` and `Packages/UniversalActions` for invite/legal links. Those are not required for first launch, but they are worth updating if you want a fully rebranded deployment.
