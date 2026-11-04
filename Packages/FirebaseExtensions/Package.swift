@@ -14,7 +14,7 @@ let package = Package(
             targets: ["FirebaseExtensions"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "12.12.0")),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "12.19.3")),
     ],
     targets: [
         .target(
