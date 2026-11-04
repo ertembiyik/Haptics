@@ -18,7 +18,7 @@ let package = Package(
         .package(path: "../Packages/FirebaseExtensions"),
         .package(path: "../Packages/LoggerExtensions"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.12.0")),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "12.12.0")),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "12.19.3")),
     ],
     targets: [
         .target(
